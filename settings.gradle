@@ -1,2 +1,3 @@
 rootProject.name = "InterviewPrep"
 include ':app'
+include ':interviewPrep'
