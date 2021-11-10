@@ -52,7 +52,7 @@ public class QuickSort {
         // of pivot found so far
         int i = (low - 1);
 
-        for (int j = low; j <= high - 1; j++) {
+        for (int j = low; j < high; j++) {
 
             // If current element is smaller
             // than the pivot

@@ -1,6 +1,5 @@
 package com.bis.interview_prep.ordinal.ArrayAndStrings;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -122,7 +121,6 @@ public class PalindromePermutation {
         return (oldCount == 1);
     }
 
-    @NotNull
     private static HashMap<Character, Integer> getCharacterIntegerHashMap(String s) {
         //roll the char into hashtable
         s = s.toLowerCase().trim();
