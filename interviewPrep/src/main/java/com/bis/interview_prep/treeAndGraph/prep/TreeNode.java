@@ -7,6 +7,8 @@ public class TreeNode<T> {
     TreeNode<T> right;
     TreeNode<T> parent;
     public int level;
+    public int leftSize;
+    public int rank;
 
     public TreeNode(){
 
