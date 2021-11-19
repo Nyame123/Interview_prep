@@ -1,6 +1,7 @@
 package com.bis.interview_prep.search;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * In an array of integers, a "peak" is an element which is greater than or equal
@@ -21,7 +22,11 @@ public class PeakAndValley {
         for (int a : valPeakArr) {
             System.out.print(a + ",");
         }
+
     }
+
+
+
 
     //Time Complexity = O(n)
     private static int[] valleyPeakUnSortedMeth(int[] arr) {
