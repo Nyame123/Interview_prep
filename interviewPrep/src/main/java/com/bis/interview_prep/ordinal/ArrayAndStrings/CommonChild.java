@@ -2,6 +2,7 @@ package com.bis.interview_prep.ordinal.ArrayAndStrings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -17,63 +18,25 @@ import java.util.List;
 public class CommonChild {
 
     public static void main(String[] args) {
-        String s1 = "SHINCHAN";
-        String s2 = "NOHARAAA";
+        String s1 = "harry";
+        String s2 = "sally";
         int count = maxCommonChildLen(s1, s2);
         System.out.println(count);
     }
 
     private static int maxCommonChildLen(String s1, String s2) {
 
-        //convert them into the same case;
-        s1 = s1.toLowerCase();
-        s2 = s2.toLowerCase();
-        HashMap<Character, Integer> map = new HashMap<>();
-        //build the hashtable for the second string
-        for (int i = 0; i < s2.length(); i++) {
-            Character key = s2.charAt(i);
-           /* map.putIfAbsent(key, new ArrayList<>());
-            List<Integer> indices = map.get(key);
-            indices.add(i);*/
-            map.put(key,i);
-        }
-
-        int maxCount = 0;
-        List<ResultCon> resultCons = new ArrayList<>();
-        //iterate over the first string to compare
-        for (int i = 0; i < s1.length(); i++) {
-            Character key = s1.charAt(i);
-            if (map.containsKey(key)){
-
-               /* //get the appropriate index
-                List<Integer> indices = map.get(key);
-                for (int j = 0; j < indices.size(); j++) {
-                    if ()
-                }*/
-                int nextIndex = map.get(key);
-                //go over the results
-                for (int j = 0; j < resultCons.size(); j++) {
-
-                    ResultCon lastResultCon = resultCons.get(j);
-                    //check if the next character is in front of this character
-                    if (lastResultCon.lastIndex < nextIndex){
-                        lastResultCon.data.append(key);
-                        lastResultCon.lastIndex = nextIndex;
-                        lastResultCon.count++;
-                        maxCount = Math.max(maxCount, lastResultCon.count);
-                    }
+        int[][] T = new int[s1.length()+1][s2.length()+1];
+        for (int i = 1; i <= s1.length(); i++) {
+            for (int j = 1; j <= s2.length(); j++) {
+                if (s1.charAt(i-1) == s2.charAt(j-1)){
+                    T[i][j] = T[i-1][j-1] + 1;
+                }else{
+                    T[i][j] = Math.max(T[i-1][j],T[i][j-1]);
                 }
-
-                ResultCon resultCon = new ResultCon();
-                resultCon.data.append(key);
-                resultCon.lastIndex = nextIndex;
-                resultCon.count++;
-                resultCons.add(resultCon);
-                maxCount = Math.max(maxCount, resultCon.count);
             }
         }
-
-        return maxCount;
+        return T[s1.length()][s2.length()];
     }
 
     static class ResultCon {

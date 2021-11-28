@@ -5,6 +5,7 @@ public class CompressedStrings {
     public static void main(String[] args) {
         String s = "abcdefffffffffffffff";
         compressStringWithRepetition(s);
+        //System.out.println(s.substring(1,5));
     }
 
     static boolean willCompressedBeSmaller(String s){
