@@ -26,13 +26,15 @@ package com.bis.interview_prep.ordinal.easy;
 public class KadaneAlgo {
 
     public static void main(String[] args) {
-        int[] a = {-2, -3, 4, -1, -2, 1, 5, -3};
-        System.out.println("Maximum contiguous sum is ");
-        maxSubArraySumWithRange(a);
+        //int[] a = {-2, -3, 4, -1, -2, 1, 5, -3};
+        int[] a = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        //System.out.println("Maximum contiguous sum is ");
+        int sum = maxSubArray(a);
+        System.out.println("Maximum contiguous sum is " + sum);
        /* int sum = largestSumContigousSubArray(a);
         System.out.println("Maximum contiguous sum is "+sum);*/
         //minSubArrayForEachIndex(new int[]{3,-1,-2});
-        minAtEachIndex(a);
+        // minAtEachIndex(a);
     }
 
     static void minSubArrayForEachIndex(int[] arr) {
@@ -62,8 +64,8 @@ public class KadaneAlgo {
 
     static void minAtEachIndex(int[] a) {
         int n = a.length;
-        int minSoFar = a[n-1];
-        int minHere = a[n-1];
+        int minSoFar = a[n - 1];
+        int minHere = a[n - 1];
         System.out.printf("Min At Index %d = %d\n", n - 1, minHere);
         for (int i = n - 2; i >= 0; i--) {
 
@@ -79,6 +81,43 @@ public class KadaneAlgo {
             System.out.printf("Min At Index %d = %d\n", i, minSoFar);
 
         }
+
+    }
+
+    public static int maxSubArray(int[] nums) {
+
+        return helper(nums, 0, nums.length - 1);
+    }
+
+    public static int helper(int nums[], int i, int j) {
+
+        if (i == j) {
+            return nums[i];
+        }
+
+        int mid = (i + j) / 2;
+        int sum = 0, leftMax = Integer.MIN_VALUE;
+
+        for (int l = mid; l >= i; l--) {
+            sum += nums[l];
+            if (sum > leftMax) {
+                leftMax = sum;
+            }
+        }
+
+        int rightMax = Integer.MIN_VALUE;
+        sum = 0;    // reset sum to 0
+        for (int l = mid + 1; l <= j; l++) {
+            sum += nums[l];
+            if (sum > rightMax) {
+                rightMax = sum;
+            }
+        }
+
+        int maxLeftRight = Math.max(helper(nums, i, mid),
+                helper(nums, mid + 1, j));
+        return Math.max(maxLeftRight, leftMax + rightMax);
+
 
     }
 
