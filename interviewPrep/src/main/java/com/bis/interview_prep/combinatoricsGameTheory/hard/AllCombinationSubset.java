@@ -67,7 +67,7 @@ public class AllCombinationSubset {
      * =================================================================
      * arr[]  ---> Input Array
      *     data[] ---> Temporary array to store current combination
-     *     start & end ---> Staring and Ending indexes in arr[]
+     *     start & end ---> Starting and Ending indexes in arr[]
      *     index  ---> Current index in data[]
      *     r ---> Size of a combination to be printed
      **/
