@@ -1,6 +1,8 @@
 package com.bis.interview_prep.ordinal.ArrayAndStrings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class MinimumBribes {
@@ -8,7 +10,7 @@ public class MinimumBribes {
     public static void main(String[] args) {
 
         //int[] arr = {1,2,5,3,7,8,6,4};
-        int[] arr = {5, 1, 2, 3, 7, 8, 6, 4};
+        Integer[] arr = {5, 1, 2, 3, 7, 8, 6, 4};
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
@@ -19,6 +21,15 @@ public class MinimumBribes {
         list.add(8);
         list.add(6);
         minimumBribes(list);
+
+
+        Arrays.sort(arr,new Comparator<Integer>(){
+
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                return Integer.compare(integer,t1);
+            }
+        });
     }
 
     public static void minimumBribes(List<Integer> q) {

@@ -33,7 +33,9 @@ public class ModularMultiplicativeInverse {
         int a = 3, m = 11;
 
         // Function call
-//        System.out.println(modInverseMeth1(a, m));
+        //modularMultiplicativeInverse(a,m);
+        modularMultiplicativeInverseFermat(a,m);
+        System.out.println(modInverse(a, m));
         modInverseMeth2(a,m);
     }
 
@@ -141,6 +143,36 @@ public class ModularMultiplicativeInverse {
             return p;
         else
             return (int)((x * (long)p) % m);
+
+    }
+
+    //using dynamic programming technique to precompute the modular multiplicative inverse
+    static void modularMultiplicativeInverse(int a,int prime){
+        int[] dp = new int[a+1];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i <= a; i++) {
+            dp[i] = dp[prime%i] * (prime - prime/i) % prime;
+        }
+
+        for (int i = 0; i <= a; i++) {
+            System.out.println(dp[i]);
+        }
+
+    }
+
+    //using factorial and fermat little theorem technique to precompute the modular multiplicative inverse
+    static void modularMultiplicativeInverseFermat(int a,int prime){
+        int[] fact = new int[a+1];
+        int[] power = new int[a+1];
+        fact[0] = power[0] = 1;
+        for (int i = 1; i <= a; i++) {
+            fact[i] = (fact[i-1] * i)%prime;
+            power[i] = power(fact[i],prime-2,prime);
+        }
+
+        for (int i = 0; i <= a; i++) {
+            System.out.println(power[i]);
+        }
 
     }
 

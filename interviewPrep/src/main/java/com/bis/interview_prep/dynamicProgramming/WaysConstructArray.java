@@ -13,7 +13,7 @@ public class WaysConstructArray {
 
     public static void main(String[] args) {
         int n = 4, k = 3, x = 2;
-        long result = countArray(n,k,x);
+        long result = countArray(n, k, x);
         System.out.println(result);
 
     }
