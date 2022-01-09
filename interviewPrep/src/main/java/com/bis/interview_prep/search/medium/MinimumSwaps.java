@@ -1,5 +1,6 @@
 package com.bis.interview_prep.search.medium;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -14,16 +15,12 @@ public class MinimumSwaps {
         // Write your code here
         //in ascending order of arr items
         int n = arr.size();
-        int asc = itemSwapped(arr);
-        //reverse the arr
-        for(int i = 0; i < n/2; i++){
-            int temp = arr.get(i);
-            int last = arr.get(n-i-1);
-            arr.set(i,last);
-            arr.set(n-i-1,temp);
+        List<Integer> reversed = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            reversed.add(arr.get(n-i-1));
         }
-
-        int desc = itemSwapped(arr);
+        int asc = itemSwapped(arr);
+        int desc = itemSwapped(reversed);
 
         //System.out.println(arr);
         return Math.min(desc,asc);

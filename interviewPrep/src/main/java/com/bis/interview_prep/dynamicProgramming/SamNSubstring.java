@@ -14,8 +14,8 @@ public class SamNSubstring {
     static int mod = 1000000007;
 
     public static void main(String[] args) {
-        String s = "2222222233333333333333333333333";
-        int res = substringUsingDp(s);
+        String s = "423";
+        int res = substrings1(s);
         System.out.println(res);
     }
 
@@ -62,6 +62,22 @@ public class SamNSubstring {
         for (int i = len - 1; i >= 0; i--) {
             sum = (sum + mul(mul(n.charAt(i) - '0', f), i + 1)) % mod;
             f = (mul(f, 10) + 1) % mod;
+        }
+
+        return sum;
+
+    }
+
+    public static int substrings1(String n) {
+        // Write your code here
+        int mod = 1000000007;
+        int sum = n.charAt(0)-'0';
+        int temp = n.charAt(0)-'0';
+        int len = n.length();
+        for (int i = 1; i < len; i++) {
+            temp = mul(10,temp) + (i+1)*(n.charAt(i)-'0');
+            //temp %= mod;
+            sum = (temp+sum)%mod;
         }
 
         return sum;

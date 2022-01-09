@@ -4,11 +4,14 @@ public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
         String s = "abababa";
+
         System.out.println(longestPalindromeManacher(s));
     }
 
+
     public static String longestPalindromeManacher(String s) {
         //get the modified String
+        //01010101
         String newString = getModifiedString(s);
 
         //get the center and right boundary from center
@@ -20,7 +23,6 @@ public class LongestPalindromicSubstring {
         int[] LPS = new int[len];
         //go over the characters in the string
         for (int i = 0; i < len; i++) {
-
             //mirror index of the character at position i
             int mirrorIndex = 2 * center - i;
 
@@ -174,4 +176,12 @@ public class LongestPalindromicSubstring {
         return answer;
 
     }
+}
+
+class User{
+    //getting the age of the user
+   // int age = 23;
+    long age =  24;
+    String firstName = "Nyame";
+
 }
