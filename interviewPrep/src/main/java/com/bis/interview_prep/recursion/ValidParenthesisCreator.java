@@ -11,7 +11,7 @@ import java.util.List;
 public class ValidParenthesisCreator {
 
     public static void main(String[] args) {
-        int numOfParenthesis = 4;
+        int numOfParenthesis = 3;
         //HashSet<String> results = validParenthesis(numOfParenthesis);
         List<String> results = generateValidParen(numOfParenthesis);
         System.out.println(results + "  " + results.size());
