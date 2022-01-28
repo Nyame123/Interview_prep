@@ -1,4 +1,4 @@
-package com.bis.interview_prep.recursion;
+package com.bis.interview_prep.recursion.backtracking;
 
 import java.util.ArrayList;
 import java.util.List;

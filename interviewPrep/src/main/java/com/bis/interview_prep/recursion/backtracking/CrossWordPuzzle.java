@@ -1,4 +1,4 @@
-package com.bis.interview_prep.recursion;
+package com.bis.interview_prep.recursion.backtracking;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -333,7 +333,7 @@ class Result {
 
                     p = i;
                     q = j;
-                    //check if the grid col i can accomodate the word at index
+                    //check if the grid col i can accommodate the word at index
                     for (k = 0; k < words.get(index).length() && p + k < col; k++) {
                         char cur = crossword[p + k][q];
                         if (cur != '-' && cur != words.get(index).charAt(k)) {
