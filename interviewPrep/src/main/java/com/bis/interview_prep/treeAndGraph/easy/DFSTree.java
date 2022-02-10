@@ -1,5 +1,8 @@
 package com.bis.interview_prep.treeAndGraph.easy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Tree Traversals (Inorder, Preorder and Postorder)
  * Difficulty Level : Easy
@@ -44,6 +47,10 @@ package com.bis.interview_prep.treeAndGraph.easy;
 class Node {
     int key;
     Node left, right;
+    List<Node> child = new ArrayList<>();
+
+    public Node() {
+    }
 
     public Node(int item) {
         key = item;
