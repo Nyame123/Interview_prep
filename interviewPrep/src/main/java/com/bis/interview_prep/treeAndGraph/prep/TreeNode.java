@@ -2,15 +2,15 @@ package com.bis.interview_prep.treeAndGraph.prep;
 
 public class TreeNode<T> {
 
-    T data;
-    TreeNode<T> left;
-    TreeNode<T> right;
-    TreeNode<T> parent;
+    public TreeNode<T> left;
+    public TreeNode<T> right;
+    public TreeNode<T> parent;
     public int level;
     public int leftSize;
     public int rank;
+    public T data;
 
-    public TreeNode(){
+    public TreeNode() {
 
     }
 

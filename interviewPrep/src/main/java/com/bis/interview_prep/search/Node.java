@@ -3,7 +3,9 @@ package com.bis.interview_prep.search;
 public class Node {
     public Node next;
     public int data;
+    public Node(){
 
+    }
     public Node(int d) {
         this.data = d;
     }
