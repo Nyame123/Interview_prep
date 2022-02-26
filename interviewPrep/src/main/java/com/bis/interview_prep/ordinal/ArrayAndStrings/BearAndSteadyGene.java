@@ -15,7 +15,8 @@ import java.util.HashMap;
  * can you help Limak find the length of the smallest possible substring that he can replace to make gene a steady gene?
  * Note: A substring of a string  is a subsequence made up of zero or more contiguous characters of s.
  * <p>
- * As an example, consider . The substring  just before or after  can be replaced with  or . One selection would create .
+ * As an example, consider gene = ACTGAAAG. The substring AA just before or after G can be replaced with CT or TC.
+ * One selection would create ACTGACTG.
  **/
 public class BearAndSteadyGene {
 

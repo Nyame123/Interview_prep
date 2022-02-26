@@ -61,7 +61,7 @@ public class MaximumPalindromes {
         }
 
         //precompute the storage of the characters
-        for(int i  = 1; i <= n; i++){
+        for(int i = 1; i <= n; i++){
             for(int j = 0; j < 26; j++){
                 count[i][j] += count[i-1][j];
             }

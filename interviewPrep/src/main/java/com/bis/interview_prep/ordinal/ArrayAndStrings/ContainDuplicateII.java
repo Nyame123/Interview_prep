@@ -20,7 +20,7 @@ public class ContainDuplicateII {
     public static void main(String[] args) {
         int[] nums = {1, 2, 1};
         int k = 1;
-        System.out.println(containsNearbyDuplicate(nums,k));
+        System.out.println(containsNearbyDuplicateUsingSet(nums,k));
     }
 
     static boolean containsNearbyDuplicate(int[] nums, int k) {

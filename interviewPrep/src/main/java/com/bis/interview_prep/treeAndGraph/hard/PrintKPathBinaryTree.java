@@ -2,6 +2,7 @@ package com.bis.interview_prep.treeAndGraph.hard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,8 @@ public class PrintKPathBinaryTree {
         root.right.right.right = new Node(2);
 
         int k = 5;
-        printKPath(root, k,0);
+        kPathCounter = printKPathSmart(root, k,0);
+//        printKPathList(root, k);
 
         System.out.println(kPathCounter);
     }
@@ -58,21 +60,66 @@ public class PrintKPathBinaryTree {
         System.out.println();
     }
 
-    static void printKPath(Node root, int k,int sum) {
-        if (k == sum){
-            kPathCounter++;
+    //Time Complexity = O(n)
+    static int printKPathSmart(Node root, int k,int sum) {
+        return printKPathSmart(root,k,sum,new HashMap<>());
+    }
+
+    static int printKPathSmart(Node root, int k,int cur, HashMap<Integer,Integer> memo){
+        if (root == null){
+            return 0;
         }
+        cur += root.data;
+        int sum = 0;
+        if (cur == k){
+            sum++;
+        }
+
+        sum += memo.getOrDefault(cur-k,0);
+
+        //memorize the running sum
+        memorize(memo,cur,1);
+        sum += printKPathSmart(root.left,k,cur,memo);
+        sum += printKPathSmart(root.right,k,cur,memo);
+        memorize(memo,cur,-1);
+
+        return sum;
+    }
+
+    static void memorize(HashMap<Integer,Integer> map,int key,int it){
+        int newValue = map.getOrDefault(key,0)+it;
+        if (newValue == 0){
+            map.remove(key);
+        }else{
+            map.put(key,newValue);
+        }
+    }
+
+    //Time Complexity = O(nlogn or n^2)
+    static int printKPath(Node root, int k,int sum) {
         if (root == null) {
-            return;
+            return 0;
         }
+        int count = pathKSum(root,k,0);
+        count += printKPath(root.left, k,sum);
+        count += printKPath(root.right, k,sum);
+        return count;
+    }
+
+    static int pathKSum(Node root,int k,int sum){
+        if (root == null)
+            return 0;
 
         sum += root.data;
-        printKPath(root.left, k,sum);
-        printKPath(root.right, k,sum);
 
+        int count = 0;
+        if (sum == k){
+            count++;
+        }
+        int leftCount = pathKSum(root.left,k,sum);
+        int rightCount = pathKSum(root.right,k,sum);
 
-
-
+        return leftCount+rightCount+count;
     }
 
     //Time Complexity = O(n*h*h)

@@ -17,10 +17,11 @@ package com.bis.interview_prep.treeAndGraph.medium;
 public class IslandGrid {
 
     public static void main(String[] args) {
-        int[][] M = {{1, 1, 0, 0, 0},
-                {1, 1, 0, 0, 0},
-                {0, 0, 1, 0, 0},
-                {0, 0, 0, 1, 1}};
+        int[][] M = {{ 1, 1, 0, 0, 0 },
+                { 0, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 1 },
+                { 0, 0, 0, 0, 0 },
+                { 1, 0, 1, 0, 1 }};
 
         int res = countIsland(M);
         System.out.printf("Count of the Island = %d",res);
@@ -41,10 +42,8 @@ public class IslandGrid {
 
         visited[r][c] = true;
         for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (isSafe(matrix,r+rowD[i],c+colD[j],visited)){
-                    dfs(matrix,r+rowD[i],c+colD[j],visited);
-                }
+            if (isSafe(matrix,r+rowD[i],c+colD[i],visited)){
+                dfs(matrix,r+rowD[i],c+colD[i],visited);
             }
         }
     }

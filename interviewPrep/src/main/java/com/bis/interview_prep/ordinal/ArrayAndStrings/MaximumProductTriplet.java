@@ -123,7 +123,6 @@ public class MaximumProductTriplet {
         int minA = Integer.MAX_VALUE, minB = Integer.MAX_VALUE;
 
         for (int i = 0; i < arr.length; i++) {
-
             //update the first three maxes
             if (arr[i] > maxA) {
                 maxC = maxB;

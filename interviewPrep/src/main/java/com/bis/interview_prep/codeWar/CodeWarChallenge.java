@@ -16,13 +16,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-
 import static java.util.stream.Collectors.toList;
 
 public class CodeWarChallenge {
     public static void main(String[] args) throws IOException {
 
-       // timeConversion("06:40:03AM");
+        // timeConversion("06:40:03AM");
         //countLetters("the quick brown fox jump over a lazy dog");
         /*int A[] = {5, 7, 3, 9, 4, 9, 8, 3, 1};
         int max = findLargestNumber(A);
@@ -140,7 +139,6 @@ public class CodeWarChallenge {
     }
 
 
-
     public static void timeConversion(String s) {
         // Write your code here
         String mode = s.substring(s.length() - 2);
@@ -153,8 +151,9 @@ public class CodeWarChallenge {
         if (mode.equalsIgnoreCase("pm")) {
 
             if (Integer.parseInt(hourPart) != 12) {
-                int result = Integer.parseInt(hourPart) + 12;;
-                hourPart = ""+ result;
+                int result = Integer.parseInt(hourPart) + 12;
+                ;
+                hourPart = "" + result;
 
             }
 
@@ -177,14 +176,14 @@ public class CodeWarChallenge {
             arr[i] = candles.get(i);
         }
 
-        SortAlgorithm.sort(arr,0,arr.length-1,true);
+        SortAlgorithm.sort(arr, 0, arr.length - 1, true);
 
         int playerCounter = 1;
-        for (int i = 1,rankCounter=1; i < arr.length; i++) {
+        for (int i = 1, rankCounter = 1; i < arr.length; i++) {
             //System.out.println(arr[i]);
             if (rankCounter <= rank) {
                 playerCounter++;
-            }else{
+            } else {
                 break;
             }
 
@@ -230,7 +229,7 @@ public class CodeWarChallenge {
                 .map(Integer::parseInt)
                 .collect(toList());
 
-        ranking(apples,10);
+        ranking(apples, 10);
 
         bufferedReader.close();
     }
@@ -296,7 +295,7 @@ public class CodeWarChallenge {
     }
 
     private static void runParkingDilema() {
-        parkingDilemma(new int[]{2,1,10, 8, 17}, 3);
+        parkingDilemma(new int[]{2, 1, 10, 8, 17}, 3);
     }
 
     public static void parkingDilemma(int[] cars, int k) {
@@ -965,7 +964,7 @@ public class CodeWarChallenge {
     /**
      * finding the number of pairs in smartest way
      */
-    public static int sockMerchantPair(int n,  List<Integer> ar) {
+    public static int sockMerchantPair(int n, List<Integer> ar) {
         // Write your code here
 
         int[] freq = new int[101];
@@ -1053,13 +1052,13 @@ public class CodeWarChallenge {
     }
 
     public static class ListNode {
-        int val;
-        ListNode next;
+        public int val;
+        public ListNode next;
 
-        ListNode() {
+        public ListNode() {
         }
 
-        ListNode(int val) {
+        public ListNode(int val) {
             this.val = val;
         }
 
