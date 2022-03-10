@@ -1,5 +1,8 @@
 package com.bis.interview_prep.combinatoricsGameTheory.hard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Permutation {
 
     public static void main(String[] args) {
@@ -73,5 +76,43 @@ class SquareRoot{
         }
 
         System.out.println(-1);
+    }
+}
+class PermutationNumbersArray {
+
+    public static void main(String[] args) {
+        int[] arr = {1,2,3};
+        PermutationNumbersArray solution = new PermutationNumbersArray();
+        List<List<Integer>> res = solution.permute(arr);
+        for(List<Integer> ans: res){
+            System.out.println(ans);
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        int n  = nums.length;
+        List<Integer> ans = new ArrayList<>(n);
+        List<List<Integer>> results = new ArrayList<>();
+        boolean[] visited = new boolean[n];
+        permute(nums,ans,results,visited);
+        return results;
+    }
+
+    void permute(int[] nums,List<Integer> sol, List<List<Integer>> list,boolean[] visited){
+        //base case
+        if(nums.length == sol.size()){
+            list.add(new ArrayList<>(sol));
+        }else{
+            for(int i = 0; i < nums.length; i++){
+                if (visited[i]){
+                    continue;
+                }
+                int offset = nums[i];
+                sol.add(offset);
+                visited[i] = true;
+                permute(nums,sol,list,visited);
+                sol.remove(sol.size()-1);
+                visited[i] = false;
+            }
+        }
     }
 }

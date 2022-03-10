@@ -1,4 +1,4 @@
-package com.bis.interview_prep.ordinal.hard;
+package com.bis.interview_prep.Random;
 /**
  *Random number generator in arbitrary probability distribution fashion
  * Difficulty Level : Hard

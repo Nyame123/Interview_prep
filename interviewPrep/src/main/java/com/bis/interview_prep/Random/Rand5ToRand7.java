@@ -1,4 +1,4 @@
-package com.bis.interview_prep.combinatoricsGameTheory.easy;
+package com.bis.interview_prep.Random;
 
 import java.util.Random;
 

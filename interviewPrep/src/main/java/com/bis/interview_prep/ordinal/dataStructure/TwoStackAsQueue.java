@@ -1,4 +1,4 @@
-package com.bis.interview_prep.ordinal.StackAndQueue;
+package com.bis.interview_prep.ordinal.dataStructure;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

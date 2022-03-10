@@ -28,8 +28,8 @@ package com.bis.interview_prep.combinatoricsGameTheory.easy;
 public class Combination {
 
     public static void main(String[] args) {
-        int n = 3, r = 7;
-        //System.out.println(nCr(n, r));
+        int n = 3, r = 3;
+        System.out.println(nCr(n, r));
         printNcR(n+r-2, r-1);
     }
 

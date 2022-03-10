@@ -20,8 +20,8 @@ import static java.lang.Math.min;
 public class BinomialCoefficient {
     public static void main(String[] args) {
 
-        int n = 5;
-        int k = 2;
+        int n = 3;
+        int k = 1;
         //int res = binomialCoefficient(n,k,new HashMap<>());
         int res = binomialCoeff(n,k);
         System.out.printf("Binomial Coefficient C(%d,%d) = %d ",n,k,res);

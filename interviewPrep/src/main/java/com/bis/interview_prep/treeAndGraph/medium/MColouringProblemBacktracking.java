@@ -167,22 +167,20 @@ class mColoringProbBacktracking {
            | /   |
           (0)---(1)
         */
-        int graph[][] = {
+        int[][] graph = {
                 {0, 1, 1, 1},
                 {1, 0, 1, 0},
                 {1, 1, 0, 1},
                 {1, 0, 1, 0},
         };
-        int m = 3; // Number of colors
+        int m = 2; // Number of colors
         Coloring.graphColoring(graph, m);
     }
 
     /* A utility function to check
        if the current color assignment
        is safe for vertex v */
-    boolean isSafe(
-            int v, int graph[][], int color[],
-            int c) {
+    boolean isSafe(int v, int[][] graph, int[] color, int c) {
         for (int i = 0; i < V; i++)
             if (graph[v][i] == 1 && c == color[i])
                 return false;
@@ -191,9 +189,7 @@ class mColoringProbBacktracking {
 
     /* A recursive utility function
        to solve m coloring  problem */
-    boolean graphColoringUtil(
-            int graph[][], int m,
-            int color[], int v) {
+    boolean graphColoringUtil(int[][] graph, int m, int[] color, int v) {
         /* base case: If all vertices are
            assigned a color then return true */
         if (v == V)
@@ -231,7 +227,7 @@ class mColoringProbBacktracking {
        Please note that there  may be more than one
        solutions, this function prints one of the
        feasible solutions.*/
-    boolean graphColoring(int graph[][], int m) {
+    boolean graphColoring(int[][] graph, int m) {
         // Initialize all color values as 0. This
         // initialization is needed correct
         // functioning of isSafe()
@@ -253,7 +249,7 @@ class mColoringProbBacktracking {
     }
 
     /* A utility function to print solution */
-    void printSolution(int color[]) {
+    void printSolution(int[] color) {
         System.out.println(
                 "Solution Exists: Following"
                         + " are the assigned colors");

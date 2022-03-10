@@ -1,6 +1,4 @@
-package com.bis.interview_prep.ordinal.StackAndQueue;
-
-import java.util.Objects;
+package com.bis.interview_prep.ordinal.dataStructure;
 
 /**
  * Using one single array as a multiple stack
