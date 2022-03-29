@@ -10,7 +10,7 @@ public class BuySellStock {
     public static void main(String[] args) {
 
         int[] arr = {7,1,8,3,6,4};
-        System.out.println(maxProfitKadane(arr));
+        System.out.println(maxProfit(arr));
     }
 
     public static int maxProfitKadane(int[] prices) {

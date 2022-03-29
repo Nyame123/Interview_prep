@@ -9,7 +9,7 @@ public class RotateMatrix {
                 new int[]{14,15,3,7},
                 new int[]{9,12,13,16}
         };
-        rotate2DImage(img);
+        rotateInPlaceRevTranspose(img);
     }
 
     static void rotateImgSwap(int[][] img){
@@ -66,6 +66,40 @@ public class RotateMatrix {
                 System.out.printf("%d, ", img[i][j]);
             }
             System.out.println();
+        }
+    }
+
+    /**
+     * Another solution is to use reflect and transpose
+     * 1. Transpose the matrix
+     * 2. Reflect the matrix on the middle point or reverse the matrix row after row
+     *
+     **/
+    static void rotateInPlaceRevTranspose(int[][] mat){
+        int n = mat.length;
+        transpose(mat, n);
+        reflect(mat, n);
+
+        printImage(mat);
+    }
+
+    private static void reflect(int[][] mat, int n) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n /2; j++) {
+                int temp = mat[i][j];
+                mat[i][j] = mat[i][n -1-j];
+                mat[i][n -1-j] = temp;
+            }
+        }
+    }
+
+    private static void transpose(int[][] mat, int n) {
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n; j++) {
+                int temp = mat[i][j];
+                mat[i][j] = mat[j][i];
+                mat[j][i] = temp;
+            }
         }
     }
 }

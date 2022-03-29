@@ -22,6 +22,55 @@ public class GroupAnagram {
             System.out.print(s+", ");
         }
 
+        List<List<String>> res = groupAnagram(sequence);
+        for(List<String> s: res){
+            System.out.println(s);
+        }
+
+    }
+
+    /**
+     * 1. we can use anagram comparison to check if two strings are the same
+     * 2. We combine if they are anagram else we keep a separate List for that
+     *
+     * Time Complexity = O(N^2*S)
+     **/
+    static List<List<String>> groupAnagram(String[] words){
+        List<List<String>> ans = new ArrayList<>();
+
+        next:
+        for(String word: words){
+
+            for(List<String> res: ans){
+                if (isAnagram(res.get(0),word)){
+                    res.add(word);
+                    continue next;
+                }
+            }
+
+            List<String> anagram = new ArrayList<>();
+            anagram.add(word);
+            ans.add(anagram);
+
+        }
+
+        return ans;
+    }
+
+    static boolean isAnagram(String s1, String s2){
+        int len1 = s1.length();
+        int len2 = s2.length();
+        if (len1 != len2){
+            return false;
+        }
+        int[] firstSet = new int[26];
+        int[] secondSet = new int[26];
+        for (int i = 0; i < len1; i++) {
+            firstSet[s1.charAt(i)-'a']++;
+            secondSet[s2.charAt(i)-'a']++;
+        }
+
+        return Arrays.equals(firstSet,secondSet);
     }
 
     //using hashMap

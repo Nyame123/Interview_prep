@@ -231,3 +231,32 @@ public class FirstCommonAncestor {
     }
 
 }
+
+class LowestCommonAncestorBinaryTree{
+    public TreeNode<Integer> lowestCommonAncestor(TreeNode<Integer> root, TreeNode<Integer> p, TreeNode<Integer>q) {
+        return lowestCommonAncestorHelper(root, p, q);
+    }
+
+    private TreeNode<Integer> lowestCommonAncestorHelper(TreeNode<Integer> root, TreeNode<Integer> p, TreeNode<Integer> q) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode<Integer> leftSubTree = lowestCommonAncestorHelper(root.left, p, q);
+        TreeNode<Integer> rightSubTree = lowestCommonAncestorHelper(root.right, p, q);
+
+        if (root.data == p.data || root.data == q.data) {
+            return root;
+        }
+
+        if (leftSubTree != null && rightSubTree != null) {
+            return root;
+        }
+
+        if (leftSubTree == null) {
+            return rightSubTree;
+        } else {
+            return leftSubTree;
+        }
+    }
+}
