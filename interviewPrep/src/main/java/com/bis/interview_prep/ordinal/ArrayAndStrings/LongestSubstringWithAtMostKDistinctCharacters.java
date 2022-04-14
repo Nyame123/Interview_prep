@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class LongestSubstringWithAtMostKDistinctCharacters {
 
     public static void main(String[] args) {
-        String s = "aabbcc";
+        String s = "aabacbebebe";
         int k = 3;
         int res = lengthOfLongestSubstringWithKUniqueCharacters(s,k);
         System.out.println(res);
@@ -43,10 +43,10 @@ public class LongestSubstringWithAtMostKDistinctCharacters {
             int totalSize = map.size();
             if (totalSize == len && !map.containsKey(c)) {
                 max = Math.max(max, i - k);
-                memorize(map, s.charAt(k), -1);
+                memorize(map, s.charAt(k),-1);
                 k++;
             } else {
-                memorize(map, s.charAt(i), 1);
+                memorize(map, s.charAt(i),1);
                 i++;
             }
         }
