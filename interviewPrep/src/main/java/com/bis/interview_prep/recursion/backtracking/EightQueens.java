@@ -18,7 +18,7 @@ public class EightQueens {
         System.out.println(ways.size());
         for (int i = 0; i < ways.size(); i++) {
             for (int j = 0; j < ways.get(i).length; j++) {
-                System.out.printf("%s, ",ways.get(i)[j]);
+                System.out.printf("%s, ", ways.get(i)[j]);
             }
             System.out.println();
         }
@@ -33,16 +33,17 @@ public class EightQueens {
         return ways;
     }
 
-    private static void waysQueen(int n,int row, List<Queen[]> ways, Queen[] columns) {
+    private static void waysQueen(int n, int row, List<Queen[]> ways, Queen[] columns) {
 
         //base case
         if (row == n) {
             ways.add(columns.clone());
         } else {
             for (int i = 0; i < n; i++) {
-                if (isValidPlacement(columns, row,i)) {
-                    columns[row] = new Queen(row,i);;
-                    waysQueen(n,row + 1, ways, columns);
+                if (isValidPlacement(columns, row, i)) {
+                    columns[row] = new Queen(row, i);
+
+                    waysQueen(n, row + 1, ways, columns);
                 }
             }
 
@@ -60,10 +61,10 @@ public class EightQueens {
             if (oldCol == newcol)//checking if the column is valid
                 return false;
 
-           int colDistance = Math.abs(newcol - oldCol);
-           int rowDistance = newrow - row;
-           if (rowDistance == colDistance)
-               return false;
+            int colDistance = Math.abs(newcol - oldCol);
+            int rowDistance = newrow - row;
+            if (rowDistance == colDistance)
+                return false;
 
         }
 
