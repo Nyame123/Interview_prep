@@ -13,7 +13,8 @@ import java.util.Deque;
 public class LargestRectangularAreaHistogram {
 
     public static void main(String[] args) {
-        int[] histogram = {6, 2, 5, 4, 5, 1, 6};
+        //int[] histogram = {6, 2, 5, 4, 5, 1, 6};
+        int[] histogram = {6, 2};
         int maxArea = largestAreaHistogram(histogram);
         System.out.println(maxArea);
     }
