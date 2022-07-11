@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class NextGreaterNumber {
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3};
+        int[] arr = {3,2,1};
         nextGreaterOptimized(arr);
     }
 
@@ -87,7 +87,6 @@ public class NextGreaterNumber {
 
         int min = i;
         if (i >= 0) {
-            int smaller = arr[i - 1];
             for (int j = n - 1; j > i; j--) {
                 if (arr[j] > arr[i - 1]) {
                     min = j;
@@ -112,7 +111,7 @@ public class NextGreaterNumber {
 class Solution {
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3};
+        int[] arr = {3,2,1};
         Solution solution = new Solution();
         solution.nextPermutation(arr);
         System.out.println(Arrays.toString(arr));
