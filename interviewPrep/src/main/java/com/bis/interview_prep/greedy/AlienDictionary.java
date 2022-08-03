@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 /**
  *Your friend has created a secret encrypted language by shifting letters around in the English alphabet.
- *  Given the new order of the letters and a list of words, return whether or not your friend has sorted the words lexicographically.
+ *  Given the new order of the letters and a list of words, return whether or
+ *  not your friend has sorted the words lexicographically.
  *
  * Ex: Given the following order and words...
  *
