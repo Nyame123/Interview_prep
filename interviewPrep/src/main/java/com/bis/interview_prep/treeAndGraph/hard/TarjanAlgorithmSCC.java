@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
 
@@ -39,7 +40,7 @@ public class TarjanAlgorithmSCC {
 
     //Adjacency Lists
     private LinkedList<Integer> adj[];
-    private int Time;
+    private int time;
 
     // Constructor
     @SuppressWarnings("unchecked")
@@ -50,7 +51,7 @@ public class TarjanAlgorithmSCC {
         for (int i = 0; i < v; ++i)
             adj[i] = new LinkedList();
 
-        Time = 0;
+        time = 0;
     }
 
     // Driver code
@@ -139,37 +140,37 @@ public class TarjanAlgorithmSCC {
                  Stack<Integer> st) {
 
         // Initialize discovery time and low value
-        disc[u] = Time;
-        low[u] = Time;
-        Time += 1;
+        disc[u] = time;
+        low[u] = time;
+        time += 1;
         stackMember[u] = true;
         st.push(u);
 
-        int n;
+        int v;
 
         // Go through all vertices adjacent to this
         Iterator<Integer> i = adj[u].iterator();
 
         while (i.hasNext()) {
-            n = i.next();
+            v = i.next();
 
-            if (disc[n] == -1) {
-                SCCUtil(n, low, disc, stackMember, st);
+            if (disc[v] == -1) {
+                SCCUtil(v, low, disc, stackMember, st);
 
                 // Check if the subtree rooted with v
                 // has a connection to one of the
                 // ancestors of u
                 // Case 1 (per above discussion on
                 // Disc and Low value)
-                low[u] = Math.min(low[u], low[n]);
-            } else if (stackMember[n]) {
+                low[u] = Math.min(low[u], low[v]);
+            } else if (stackMember[v]) {
 
                 // Update low value of 'u' only if 'v' is
                 // still in stack (i.e. it's a back edge,
                 // not cross edge).
                 // Case 2 (per above discussion on Disc
                 // and Low value)
-                low[u] = Math.min(low[u], disc[n]);
+                low[u] = Math.min(low[u], disc[v]);
             }
         }
 
@@ -178,7 +179,7 @@ public class TarjanAlgorithmSCC {
         int w = -1;
         if (low[u] == disc[u]) {
             while (w != u) {
-                w = (int) st.pop();
+                w = st.pop();
                 System.out.print(w + " ");
                 stackMember[w] = false;
             }
@@ -305,9 +306,9 @@ class TarjanStronglyConnectedComponent {
         }
 
         //if vertex low time is same as visited time then this is start vertex for strongly connected component.
-        //keep popping vertices out of stack still you find current vertex. They are all part of one strongly
+        //keep popping vertices out of stack till you find current vertex. They are all part of one strongly
         //connected component.
-        if (visitedTime.get(vertex) == lowTime.get(vertex)) {
+        if (Objects.equals(visitedTime.get(vertex), lowTime.get(vertex))) {
             Set<Vertex<Integer>> stronglyConnectedComponenet = new HashSet<>();
             Vertex v;
             do {
