@@ -1,11 +1,6 @@
 package com.bis.interview_prep.codeWar;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
 
 public class Test {
     public static void main(String[] args) {
@@ -18,8 +13,8 @@ public class Test {
                 {"Software Design", "Computer Networks"}
         };
 
-        HashMap<String,String> courseMap = convertIntoHash(prereqs_courses);
-        printInOrder(courseMap,"Software Design");
+        HashMap<String, String> courseMap = convertIntoHash(prereqs_courses);
+        printInOrder(courseMap, "Software Design");
 
     }
 
@@ -34,16 +29,16 @@ public class Test {
         return courseMap;
     }
 
-    static void printInOrder(HashMap<String,String> coursesMap,String firstCourse){
+    static void printInOrder(HashMap<String, String> coursesMap, String firstCourse) {
 
         String key = coursesMap.get(firstCourse);
         int n = coursesMap.size();
         System.out.println(firstCourse);
-        while (key != null){
+        while (key != null) {
             if (coursesMap.containsKey(key)) {
-               System.out.println(key);
+                System.out.println(key);
                 key = coursesMap.get(key);
-            }else
+            } else
                 break;
         }
 
@@ -53,45 +48,79 @@ public class Test {
 
 }
 
-class ToptalTest{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *
+ *
+ **/
+
+
+
+class ToptalTest {
 
     public static void main(String[] args) {
-
-        String[] arr = {"W>I", "R>L", "T>Z", "Z>E", "S>W", "E>R", "L>A", "A>N", "N>D", "I>T"};
-
-        String res = findWord(arr);
-        System.out.println(res);
+        int a = 555, b = 555;
+        solution();
     }
 
-    static String findWord(String[] arr){
-        HashMap<String,String> map = new HashMap<>();
-        int n = arr.length;
-        HashSet<String> keys = new HashSet<>();
-        HashSet<String> values = new HashSet<>();
+    private static void solution(){
+        numberOfCarryOperations(123, 456);
+        numberOfCarryOperations(555, 555);
+        numberOfCarryOperations(900, 11);
+        numberOfCarryOperations(145, 55);
+        numberOfCarryOperations(0, 0);
+        numberOfCarryOperations(1, 99999);
+        numberOfCarryOperations(999045, 1055);
+        numberOfCarryOperations(101, 809);
+        numberOfCarryOperations(189, 209);
+    }
+    private static void numberOfCarryOperations(int a, int b) {
+        int totalCarry = 0;
+        int carry = 0;
 
-        for (int i = 0; i < n; i++) {
-            String rule = arr[i];
-            String[] rules = rule.split(">");
-            keys.add(rules[0]);
-            values.add(rules[1]);
-            map.put(rules[0],rules[1]);
-        }
+        char[] num1 = new StringBuilder(""+a).reverse().toString().toCharArray();
+        char[] num2 = new StringBuilder(""+b).reverse().toString().toCharArray();
 
-        String start  = null;
-        for(String s: keys){
-            if (!values.contains(s)){
-                start = s;
+        int len = Math.max(num1.length,num2.length);
+
+        for (int i = 0; i < len; i++) {
+            int first = (i >= num1.length)? 0: num1[i]-'0';
+            int se = (i >= num2.length)? 0 : num2[i]-'0';
+
+            int sum = first + se + carry;
+            int rem = sum / 10;
+            //int ans = sum % 10;
+
+            if (rem > 0){
+                totalCarry++;
+                carry = rem;
             }
         }
 
-        StringBuilder sb =  new StringBuilder();
-        sb.append(start);
-        while (map.containsKey(start)){
-            sb.append(map.get(start));
-            start = map.get(start);
-        }
-
-
-        return sb.toString();
+        if (carry > 1)
+            totalCarry++;
+        System.out.println(totalCarry);
+        //return totalCarry;
     }
+
+
 }

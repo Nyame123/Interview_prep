@@ -1,5 +1,8 @@
 package com.bis.interview_prep.dynamicProgramming;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * You are given N identical eggs and access to a building with k floors.
  * Your task is to find the lowest floor that will cause an egg to break,
@@ -17,9 +20,42 @@ package com.bis.interview_prep.dynamicProgramming;
 public class EggDropDp {
 
     public static void main(String[] args) {
-        int floors = 6, eggs = 2;
-        int minDrop = minimumEggDrop(floors, eggs);
+        int floors = 6, eggs = 3;
+        int minDrop = minimumEggDropRecursive(floors, eggs);
         System.out.println(minDrop);
+    }
+
+
+    //Recursive approach for egg drop
+    static int minimumEggDropRecursive(int n, int egg) {
+        return miniEggDropRec(n, egg, new HashMap<>());
+    }
+
+    static int miniEggDropRec(int n, int egg, Map<String, Integer> memo) {
+        //base case
+        String key = String.format("%s,%s", n, egg);
+        if (memo.containsKey(key))
+            return memo.get(key);
+
+        if (n == 1 || n == 0)
+            return n;
+
+        if (egg == 1)
+            return n;
+
+        int min = Integer.MAX_VALUE;
+        for (int i = 1; i <= n; i++) {
+            int res = Math.max(
+                    miniEggDropRec(i - 1, egg - 1, memo), //Egg breaks
+                    miniEggDropRec(n - i, egg, memo) //Egg does not break
+            );
+
+            min = Math.min(min, res);
+        }
+
+        memo.put(key, min + 1);
+
+        return min + 1;
     }
 
     /**

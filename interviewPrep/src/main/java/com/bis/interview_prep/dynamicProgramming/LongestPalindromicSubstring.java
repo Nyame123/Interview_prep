@@ -3,11 +3,10 @@ package com.bis.interview_prep.dynamicProgramming;
 public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
-        String s = "abababa";
+        String s = "cbbd";
 
-        System.out.println(longestPalindromeManacher(s));
+        System.out.println(longestPalindromeExpandAroundCenter(s));
     }
-
 
     public static String longestPalindromeManacher(String s) {
         //get the modified String
@@ -178,10 +177,10 @@ public class LongestPalindromicSubstring {
     }
 }
 
-class User{
+class User {
     //getting the age of the user
-   // int age = 23;
-    long age =  24;
+    // int age = 23;
+    long age = 24;
     String firstName = "Nyame";
 
 }

@@ -15,18 +15,24 @@ import java.util.Map;
 public class KnapsackProblem {
 
     public static void main(String[] args) {
-        /*int val[] = {22, 20, 15, 30, 24, 54, 21, 32, 18, 25};
-        int wt[] = {4, 2, 3, 5, 5, 6, 9, 7, 8, 10};*/
-        int val[] = {1,4,5,7};
-        int wt[] = {1,3,4,5};
-        int weight = 7;
+        int val[] = {22, 20, 15, 30, 24, 54, 21, 32, 18, 25};
+        int wt[] = {4, 2, 3, 5, 5, 6, 9, 7, 8, 10};
+       /* int val[] = {1,4,5,7};
+        int wt[] = {1,3,4,5};*/
+        int weight = 70;
       //  knapsackTabulation(wt,val,weight);
+
 
         KnapsackProblem knapsackProblem = new KnapsackProblem();
 
         int r1 = knapsackProblem.topDownRecursive(val, wt, weight);
         System.out.println("Maximized values to picked Using recursion is "+ r1);
     }
+
+
+
+
+
 
     /**
      * Key for memoization
@@ -113,4 +119,6 @@ public class KnapsackProblem {
 
         System.out.println("Maximized values to picked is "+ K[vals.length][W]);
     }
+
+
 }
