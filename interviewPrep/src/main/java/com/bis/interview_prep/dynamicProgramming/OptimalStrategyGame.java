@@ -1,6 +1,7 @@
 package com.bis.interview_prep.dynamicProgramming;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * In front of you is a row of N coins, with values v1, v1, ..., vn.
@@ -39,20 +40,20 @@ public class OptimalStrategyGame {
         int[][] dp = new int[n][n];
 
         for (int gap = 0; gap < n; gap++) {
-            for (int j = gap, i = 0; j < n; j++,i++) {
+            for (int j = gap, i = 0; j < n; j++, i++) {
                 //user picking i, first item
-                int x = (i+2 <= j)? dp[i+2][j] : 0; //opp picking i+1
-                int y =  (i+1 <= j-1)? dp[i+1][j-1] : 0;//opp picking j
+                int x = (i + 2 <= j) ? dp[i + 2][j] : 0; //opp picking i+1
+                int y = (i + 1 <= j - 1) ? dp[i + 1][j - 1] : 0;//opp picking j
 
                 //user picking j, last item
-                int z = (i <= j-2)? dp[i][j-2] : 0;  //opp picking j-1
+                int z = (i <= j - 2) ? dp[i][j - 2] : 0;  //opp picking j-1
 
-                dp[i][j] = Math.max(arr[i] + Math.min(x,y), arr[j] + Math.min(z,y));
+                dp[i][j] = Math.max(arr[i] + Math.min(x, y), arr[j] + Math.min(z, y));
 
             }
         }
 
-        return dp[0][n-1];
+        return dp[0][n - 1];
     }
 
 

@@ -5,8 +5,10 @@ import com.bis.interview_prep.treeAndGraph.prep.TreeNode;
 import java.util.HashMap;
 import java.util.Map;
 
+import sun.reflect.generics.tree.Tree;
+
 /**
- * Construct Tree from given Inorder and Preorder traversals
+ * Construct Tree from given Inorder and PostOrder traversals
  * Difficulty Level : Hard
  * Last Updated : 13 Jan, 2022
  * Let us consider the below traversals:
@@ -22,11 +24,58 @@ public class ConstructTreeFromInOrderPostOrderTraversal {
         int post[] = {9,15,7,20,3};
         int len = in.length;
 
+        construct(in,post);
         Map<Integer, Integer> map = buildTreeMap(in, len);
         preIndex = len - 1;
         TreeNode<Integer> root = buildTree(in, post, 0, len - 1, 0, map);
         inOrder(root);
     }
+
+
+    static int preInd = 0;
+    //build Tree from pre and inOrder tree
+    static void construct(int[] in, int[] post){
+        Map<Integer,Integer> map = new HashMap<>();
+        int n = in.length;
+        preInd = n-1;
+        for (int i = 0; i < n; i++) {
+            map.put(in[i],i);
+        }
+
+        TreeNode<Integer> root = build(in,post, 0, n-1, map);
+
+        inOrder(root);
+        System.out.println();
+    }
+
+    static TreeNode<Integer> build(int[] ins, int[] post, int start, int end, Map<Integer, Integer> map){
+        //base case
+        if (start > end)
+            return null;
+
+        TreeNode<Integer> node = new TreeNode<>(post[preInd--]);
+        if (start == end)
+            return node;
+
+        int midIndex = map.get(node.data);
+
+        node.right = build(ins, post, midIndex+1, end,map);
+        node.left = build(ins, post, start, midIndex-1,map);
+
+        return node;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     static void inOrder(TreeNode<Integer> root) {
         if (root == null) {
