@@ -25,10 +25,11 @@ public class QuickSort {
         int[] arr = {10, 7, 8, 9, 1, 5};
         int n = arr.length;
 
-        quickSort(arr, 0, n - 1);
+        quickSort(arr, 0, n-1);
         System.out.println("Sorted array: ");
         printArray(arr, n);
     }
+
 
     // A utility function to swap two elements
     static void swap(int[] arr, int i, int j) {

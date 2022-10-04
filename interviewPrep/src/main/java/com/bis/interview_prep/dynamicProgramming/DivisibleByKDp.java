@@ -1,6 +1,5 @@
 package com.bis.interview_prep.dynamicProgramming;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,92 +19,93 @@ public class DivisibleByKDp {
 
     public static void main(String[] args) {
         //int[] nums = {2, 4, 9, 5};
-        int[] nums = {2,6,2,2,7};
+        int[] nums = {2, 6, 2, 2, 7};
         int k = 4;
         int maxSum = maxSumDivisibleK(nums, k);
 
-        divisibleBy(nums,k);
-        divisibleByKB(nums,k);
-        divisibleByKRec(nums,k);
+        divisibleBy(nums, k);
+        divisibleByKB(nums, k);
+        divisibleByKRec(nums, k);
         System.out.println(maxSum);
     }
 
-    static void divisibleByKRec(int[] nums, int k){
-        int max = rec(0, nums,k, 0, new HashMap<>());
+    static void divisibleByKRec(int[] nums, int k) {
+        int max = rec(0, nums, k, 0, new HashMap<>());
         System.out.println(max);
     }
 
-    static int rec(int index, int[] nums, int k, int rem, Map<String, Integer> memo){
-        String key = String.format("%s,%s",index,rem);
-        if (index >= nums.length){
+    static int rec(int index, int[] nums, int k, int rem, Map<String, Integer> memo) {
+        String key = String.format("%s,%s", index, rem);
+        if (index >= nums.length) {
             return 0;
         }
 
-        if (memo.containsKey(key)){
+        if (memo.containsKey(key)) {
             return memo.get(key);
         }
 
         int max = 0;
         //take
-        int exclude = rec(index+1, nums, k, rem, memo);
-        if ((exclude + rem) % k == 0){
+        int exclude = rec(index + 1, nums, k, rem, memo);
+        if ((exclude + rem) % k == 0) {
             max = exclude;
         }
 
         //do not take
-        int include = rec(index+1, nums, k, (rem + nums[index])% k, memo);
-        if ((nums[index] + include + rem) % k == 0){
-            max = Math.max(max,include+nums[index]);
+        int include = rec(index + 1, nums, k, (rem + nums[index]) % k, memo);
+        if ((nums[index] + include + rem) % k == 0) {
+            max = Math.max(max, include + nums[index]);
         }
 
 
-        memo.put(key,max);
+        memo.put(key, max);
         return max;
     }
 
 
-    static void divisibleByKB(int[] nums, int k){
+    static void divisibleByKB(int[] nums, int k) {
         int n = nums.length;
         int[] dp = new int[k];
 
         for (int i = 0; i < n; i++) {
-            int[] tmp = Arrays.copyOf(dp,k);
+            int[] tmp = Arrays.copyOf(dp, k);
             for (int j = 0; j < k; j++) {
                 int rem = (tmp[j] + nums[i]) % k;
-                dp[rem] = Math.max(dp[rem],nums[i]+tmp[j]);
+                dp[rem] = Math.max(dp[rem], nums[i] + tmp[j]);
             }
         }
         System.out.println(dp[0]);
     }
+
     //using greedy approach by K
-    static void divisibleBy(int[] nums, int k){
+    static void divisibleBy(int[] nums, int k) {
         int n = nums.length;
         int sum = 0;
         int[] dp = new int[k];
-        Arrays.fill(dp,2000);
+        Arrays.fill(dp, 2000);
         for (int i = 0; i < n; i++) {
             sum += nums[i];
 
             int rem = nums[i] % k;
             for (int j = 1; j < k; j++) {
-                int mod = (nums[i]+ dp[j]) % k;
-                dp[mod] = Math.min(dp[mod],nums[i]+ dp[j]);
+                int mod = (nums[i] + dp[j]) % k;
+                dp[mod] = Math.min(dp[mod], nums[i] + dp[j]);
             }
 
-            dp[rem] = Math.min(dp[rem],nums[i]);
+            dp[rem] = Math.min(dp[rem], nums[i]);
         }
 
-        if (sum % k == 0){
+        if (sum % k == 0) {
             System.out.println(sum);
-        }else{
+        } else {
             int rem = sum % k;
-            System.out.println(sum-dp[rem]);
+            System.out.println(sum - dp[rem]);
         }
     }
 
 
     //using greedy approach
-    static void divisibleBy3(int[] nums){
+    static void divisibleBy3(int[] nums) {
         int leftTwo = 2000, leftOne = 2000;
         int n = nums.length;
         int sum = 0;
@@ -113,31 +113,23 @@ public class DivisibleByKDp {
         for (int i = 0; i < n; i++) {
             sum += nums[i];
 
-            if (nums[i] % 3 == 1){
-                leftTwo = Math.min(leftTwo,nums[i]+leftOne);
-                leftOne = Math.min(leftOne,nums[i]);
-            }else if (nums[i] % 3 == 2){
-                leftOne = Math.min(leftOne,nums[i]+leftTwo);
-                leftTwo = Math.min(leftTwo,nums[i]);
+            if (nums[i] % 3 == 1) {
+                leftTwo = Math.min(leftTwo, nums[i] + leftOne);
+                leftOne = Math.min(leftOne, nums[i]);
+            } else if (nums[i] % 3 == 2) {
+                leftOne = Math.min(leftOne, nums[i] + leftTwo);
+                leftTwo = Math.min(leftTwo, nums[i]);
             }
         }
 
-        if (sum % 3 == 0){
+        if (sum % 3 == 0) {
             System.out.println(sum);
-        }else if (sum % 3 == 1){
-            System.out.println(sum-leftOne);
-        }else{
-            System.out.println(sum-leftTwo);
+        } else if (sum % 3 == 1) {
+            System.out.println(sum - leftOne);
+        } else {
+            System.out.println(sum - leftTwo);
         }
     }
-
-
-
-
-
-
-
-
 
 
     /**

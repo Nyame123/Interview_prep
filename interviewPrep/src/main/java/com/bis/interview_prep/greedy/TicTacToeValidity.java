@@ -77,9 +77,11 @@ public class TicTacToeValidity {
                 return xCount == oCount;
             }
 
-            if(isWin(board, win, 'X') && xCount == oCount + 1){
-                return true;
+            if (isWin(board, win, 'X') && xCount != oCount + 1) {
+                return false;
             }
+
+            return true;
         }
 
         return false;

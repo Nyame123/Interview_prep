@@ -3,30 +3,33 @@ package com.bis.interview_prep.dynamicProgramming;
 import java.util.Arrays;
 
 /**
- *Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
+ * Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
  * We have many options to multiply a chain of matrices because matrix multiplication is associative. In other words, no matter how we parenthesize the product, the result will be the same. For example, if we had four matrices A, B, C, and D, we would have:
- *
+ * <p>
  * (ABC)D = (AB)(CD) = A(BCD) = ....
  * However, the order in which we parenthesize the product affects the number of simple arithmetic operations needed to compute the product, or the efficiency. For example, suppose A is a 10 × 30 matrix, B is a 30 × 5 matrix, and C is a 5 × 60 matrix. Then,
- *
+ * <p>
  * (AB)C = (10×30×5) + (10×5×60) = 1500 + 3000 = 4500 operations
  * A(BC) = (30×5×60) + (10×30×60) = 9000 + 18000 = 27000 operations.
- *
+ * <p>
  * Reference
- *  http://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
+ * http://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
  **/
 public class MatrixMultiplicationCost {
+
+    static int[][] dp = new int[100][100];
 
     public static void main(String[] args) {
 
         //int arr[] = {4,2,3,5,3};
-        int arr[] = {2,3,6,4,5};
+        int arr[] = {2, 3, 6, 4, 5};
+
         int cost = findCost(arr);
 
-        System.out.print("Most Efficient Operation to be done = "+cost);
+        System.out.println("Most Efficient Operation to be done = " + cost);
 
         /*int arr[] = { 1, 2, 3, 4 };*/
-        int n= arr.length;
+        int n = arr.length;
 
         for (int[] row : dp)
             Arrays.fill(row, -1);
@@ -34,25 +37,23 @@ public class MatrixMultiplicationCost {
         System.out.println("Minimum number of multiplications is " + MatrixChainOrder(arr, n));
     }
 
-    public static int findCost(int arr[]){
+    public static int findCost(int arr[]) {
         int temp[][] = new int[arr.length][arr.length];
         int q = 0;
-        for(int l=2; l < arr.length; l++){
-            for(int i=0; i < arr.length - l; i++){
+        for (int l = 2; l < arr.length; l++) {
+            for (int i = 0; i < arr.length - l; i++) {
                 int j = i + l;
                 temp[i][j] = 1000000;
-                for(int k=i+1; k < j; k++){
-                    q = temp[i][k] + temp[k][j] + arr[i]*arr[k]*arr[j];
-                    if(q < temp[i][j]){
+                for (int k = i + 1; k < j; k++) {
+                    q = temp[i][k] + temp[k][j] + arr[i] * arr[k] * arr[j];
+                    if (q < temp[i][j]) {
                         temp[i][j] = q;
                     }
                 }
             }
         }
-        return temp[0][arr.length-1];
+        return temp[0][arr.length - 1];
     }
-
-    static int[][] dp = new int[100][100];
 
     // Function for matrix chain multiplication
     static int matrixChainMemoised(int[] p, int i, int j) {

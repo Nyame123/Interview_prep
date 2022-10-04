@@ -4,7 +4,6 @@ public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
         String s = "cbbd";
-
         System.out.println(longestPalindromeExpandAroundCenter(s));
     }
 

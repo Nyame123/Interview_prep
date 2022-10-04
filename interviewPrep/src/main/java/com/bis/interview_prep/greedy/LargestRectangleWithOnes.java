@@ -29,6 +29,7 @@ public class LargestRectangleWithOnes {
 
     }
 
+
     /**
      * In this solution, we intend to use Stacks for this problem.
      * 1. Push into the stack when the current bar value is greater than or equal to the stack top value.

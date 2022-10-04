@@ -72,7 +72,7 @@ public class ExpressionEvaluator {
         }
 
         //when the entire experession is parsed, evaluate what is left in the stacks
-        while (!opStack.isEmpty()){
+        while (!opStack.isEmpty()) {
             int val = applyOp(opStack.pop(), valuesStack.pop(), valuesStack.pop());
             valuesStack.push(val);
         }

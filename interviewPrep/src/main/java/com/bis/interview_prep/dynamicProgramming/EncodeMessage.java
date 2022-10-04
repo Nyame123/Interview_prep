@@ -10,10 +10,11 @@ package com.bis.interview_prep.dynamicProgramming;
 public class EncodeMessage {
 
     public static void main(String[] args) {
-        String message = "1034";
+        String message = "1134";
         int count = encodeMessageCount(message);
         System.out.println(count);
     }
+
 
     /**
      * In this problem, we are to count the ways to encode a message. We are given a mapping to
