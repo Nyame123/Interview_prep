@@ -1,7 +1,5 @@
 package com.bis.interview_prep.dynamicProgramming;
 
-import java.util.Arrays;
-
 /**
  * You are a thief trying to steal from houses in a neighborhood. The amount of money that can be stolen from the
  * ith house is represented by nums[i]. While you’d like to steal from all the houses, if adjacent
@@ -16,6 +14,7 @@ public class HouseRobber1 {
 
     public static void main(String[] args) {
         int[] nums = {1, 3, 2, 5, 2};
+
         int result = houseRobber(nums);
         System.out.println(result);
     }

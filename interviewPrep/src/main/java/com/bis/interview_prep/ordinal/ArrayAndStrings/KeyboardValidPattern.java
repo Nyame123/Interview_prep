@@ -1,5 +1,8 @@
 package com.bis.interview_prep.ordinal.ArrayAndStrings;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.
  * <p>
@@ -27,7 +30,7 @@ public class KeyboardValidPattern {
      * 1. From the keyboard, there are 9 keys and some keys gives the same ways of valid pattern
      * 2. Keys, {1,3,7,9}, {2,4,6,8} and {5}.
      * 3. We can check the valid keyboard pattern from min to max length.
-     *
+     * <p>
      * Time Complexity = O((max-min)*10^max)
      **/
     static int waysOfConnect(int min, int max) {
@@ -50,11 +53,11 @@ public class KeyboardValidPattern {
         jump[4][6] = jump[6][4] = 5;
         for (int i = min; i <= max; i++) {
             //for group, {1,3,7,9}
-            ways += 4 * dfs(jump,visited,1,i-1);
+            ways += 4 * dfs(jump, visited, 1, i - 1);
             //for group, {2,4,6,8}
-            ways += 4 * dfs(jump,visited,2,i-1);
+            ways += 4 * dfs(jump, visited, 2, i - 1);
             //for 5
-            ways += dfs(jump,visited,5,i-1);
+            ways += dfs(jump, visited, 5, i - 1);
         }
         return ways;
     }
