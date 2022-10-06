@@ -1,6 +1,8 @@
 package com.bis.interview_prep.dynamicProgramming;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
@@ -23,7 +25,6 @@ public class MatrixMultiplicationCost {
 
         //int arr[] = {4,2,3,5,3};
         int arr[] = {2, 3, 6, 4, 5};
-
         int cost = findCost(arr);
 
         System.out.println("Most Efficient Operation to be done = " + cost);
