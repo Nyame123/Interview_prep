@@ -30,7 +30,6 @@ public class QuickSort {
         printArray(arr, n);
     }
 
-
     // A utility function to swap two elements
     static void swap(int[] arr, int i, int j) {
         int temp = arr[i];

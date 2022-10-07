@@ -1,4 +1,7 @@
 package com.bis.interview_prep.search.medium;
+
+import java.util.Arrays;
+
 /**
  * Merge Sort
  * Difficulty Level : Medium
