@@ -2,6 +2,7 @@ package com.bis.interview_prep.treeAndGraph.medium;
 
 import com.bis.interview_prep.treeAndGraph.prep.TreeNode;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -35,7 +36,8 @@ public class CousinBinaryTree {
 
         TreeNode<Integer> Node1, Node2;
         Node1 = root.left.right.right;
-        Node2 = root.right.left.right;
+        Node2 = root.left.right.left;
+
         if (isCousinTraversal(root, Node1, Node2))
             System.out.println("Yes");
         else
@@ -43,30 +45,30 @@ public class CousinBinaryTree {
     }
 
     //level recursion
-    static int level(TreeNode<Integer> root, TreeNode<Integer> node, int level){
+    static int level(TreeNode<Integer> root, TreeNode<Integer> node, int level) {
         if (root == null)
             return 0;
 
         if (root == node)
             return level;
 
-        int l = level(root.left, node, level+1);
+        int l = level(root.left, node, level + 1);
         if (l != 0)
             return l;
 
-        return level(root.right,node,level+1);
+        return level(root.right, node, level + 1);
     }
 
-    static boolean isCousinTraversal(TreeNode<Integer> root, TreeNode<Integer> nodeA, TreeNode<Integer> nodeB){
+    static boolean isCousinTraversal(TreeNode<Integer> root, TreeNode<Integer> nodeA, TreeNode<Integer> nodeB) {
         if (root == null)
             return false;
 
-        return (level(root,nodeA,1) == level(root, nodeB, 1) &&
-                !isSibling(root,nodeA,nodeB));
+        return (level(root, nodeA, 1) == level(root, nodeB, 1) &&
+                !isSibling(root, nodeA, nodeB));
     }
 
     //is sibling
-    static boolean isSibling(TreeNode<Integer> root, TreeNode<Integer> nodeA, TreeNode<Integer> nodeB){
+    static boolean isSibling(TreeNode<Integer> root, TreeNode<Integer> nodeA, TreeNode<Integer> nodeB) {
         if (root == null)
             return false;
 
@@ -75,9 +77,6 @@ public class CousinBinaryTree {
                 isSibling(root.left, nodeA, nodeB) ||
                 isSibling(root.right, nodeA, nodeB));
     }
-
-
-
 
 
     private static boolean isCousin(TreeNode<Integer> root,
@@ -99,11 +98,11 @@ public class CousinBinaryTree {
             while (levelSize > 0) {
                 Pair<TreeNode<Integer>, TreeNode<Integer>> cur = queue.poll();
                 if (cur.a == node1) {
-                    parA = cur.a;
+                    parA = cur.b;
                 }
 
                 if (cur.a == node2) {
-                    parB = cur.a;
+                    parB = cur.b;
                 }
 
                 if (cur.a.left != null) {
@@ -124,8 +123,9 @@ public class CousinBinaryTree {
             if (parA != null && parB != null && parA != parB)
                 return true;
 
-            if (parA != null && parA == parB)
+            if ((parA == null && parB != null) || (parA != null && parB == null)) {
                 return false;
+            }
         }
 
         return false;
