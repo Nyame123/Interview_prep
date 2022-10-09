@@ -1,5 +1,8 @@
 package com.bis.interview_prep.dynamicProgramming;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
  * <p>
@@ -14,7 +17,6 @@ public class EncodeMessage {
         int count = encodeMessageCount(message);
         System.out.println(count);
     }
-
 
     /**
      * In this problem, we are to count the ways to encode a message. We are given a mapping to

@@ -2,6 +2,7 @@ package com.bis.interview_prep.greedy;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  *Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
@@ -24,10 +25,53 @@ public class LargestRectangleWithOnes {
                 new int[]{0, 1, 0, 0},
         };
 
+        maxSquareSize(mat);
         int largestRec = largestRecWithOnes(mat);
         System.out.println(largestRec);
 
     }
+
+    //maximum sized square matrix
+    static void maxSquareSize(int[][] mat) {
+        int n = mat.length;
+        int max = largestSize(mat[0]);
+        for (int i = 1; i < n; i++) {
+
+            for (int j = 0; j < mat[0].length; j++) {
+                mat[i][j] += mat[i - 1][j];
+            }
+
+            int area = largestSize(mat[i]);
+            max = Math.max(area, max);
+        }
+
+        System.out.println(max);
+    }
+
+    static int largestSize(int[] arr) {
+        int n = arr.length;
+        Deque<Integer> stack = new LinkedList<>();
+        int i = 0;
+        int max = 0;
+        while (i < n) {
+            if (stack.isEmpty() || arr[i] >= arr[stack.peek()]) {
+                stack.push(i++);
+            } else {
+                int top = stack.pop();
+                int area = arr[top] * ((stack.isEmpty()) ? i : i - stack.peek()-1);
+                max = Math.max(area, max);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            int top = stack.pop();
+            int area = arr[top] * ((stack.isEmpty()) ? i : i - stack.peek()-1);
+            max = Math.max(area, max);
+        }
+
+        return max;
+    }
+
 
 
     /**
