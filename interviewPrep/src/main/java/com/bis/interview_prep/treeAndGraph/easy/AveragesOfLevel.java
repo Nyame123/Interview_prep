@@ -1,6 +1,9 @@
 package com.bis.interview_prep.treeAndGraph.easy;
 
+import com.bis.interview_prep.treeAndGraph.prep.TreeNode;
+
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -28,9 +31,11 @@ public class AveragesOfLevel {
         root.right.right = newNode(7);
         System.out.println("Averages of levels : ");
         System.out.print("[");
+
         averageOfLevelsDFS(root);
         System.out.println("]");
     }
+
 
     static void averageOfLevelsDFS(Node root) {
         List<Double> sum = new ArrayList<>();
