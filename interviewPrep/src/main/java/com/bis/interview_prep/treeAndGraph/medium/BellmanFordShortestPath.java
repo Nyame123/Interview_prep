@@ -4,7 +4,9 @@ import com.bis.interview_prep.ordinal.graphs.Edge;
 import com.bis.interview_prep.ordinal.graphs.Graph;
 import com.bis.interview_prep.ordinal.graphs.Vertex;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +45,112 @@ public class BellmanFordShortestPath {
         Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
         Map<Vertex<Integer>, Integer> distance = shortestPath.getShortestPath(graph, startVertex);
         System.out.println(distance);
+
+        usingGraphMatrix();
     }
+
+
+    static void usingGraphMatrix() {
+        int graph1[][] = new int[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0},
+                {4, 0, 8, 0, 0, 0, 0, 11, 0},
+                {0, 8, 0, 7, 0, 4, 0, 0, 2},
+                {0, 0, 7, 0, 9, 14, 0, 0, 0},
+                {0, 0, 0, 9, 0, 10, 0, 0, 0},
+                {0, 0, 4, 14, 10, 0, 2, 0, 0},
+                {0, 0, 0, 0, 0, 2, 0, 1, 6},
+                {8, 11, 0, 0, 0, 0, 1, 0, 7},
+                {0, 0, 2, 0, 0, 0, 6, 7, 0}};
+
+        int vertice = 9;
+
+        shortestPathUsingBellmanFord(graph1, vertice, 0);
+    }
+
+    //using BellmanFord algorithm
+    static class EdgeNode{
+        int src;
+        int des;
+        int weight;
+    }
+
+    static void shortestPathUsingBellmanFord(int[][] graph, int v, int src){
+        List<EdgeNode> edgeList = new ArrayList<>();
+        HashMap<Integer,Integer> distance = new HashMap<>();
+
+        for (int i = 0; i < v; i++) {
+            distance.put(i,Integer.MAX_VALUE);
+        }
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[0].length; j++) {
+                if (graph[i][j] != 0) {
+                    EdgeNode edgeNode = new EdgeNode();
+                    edgeNode.src = i;
+                    edgeNode.des = j;
+                    edgeNode.weight = graph[i][j];
+                    edgeList.add(edgeNode);
+                }
+            }
+        }
+        //[0, 4, 12, 19, 21, 11, 9, 8, 14]
+        distance.put(src,0);
+        for (int i = 0; i < v - 1; i++) {
+
+            for (int j = 0; j < edgeList.size(); j++) {
+                EdgeNode edgeNode = edgeList.get(j);
+
+                if (distance.get(edgeNode.src) != Integer.MAX_VALUE &&
+                        distance.get(edgeNode.src) + edgeNode.weight < distance.get(edgeNode.des)){
+                    distance.put(edgeNode.des,distance.get(edgeNode.src) + edgeNode.weight);
+                }
+            }
+        }
+
+        for (int j = 0; j < edgeList.size(); j++) {
+            EdgeNode edgeNode = edgeList.get(j);
+            if (distance.get(edgeNode.src) != Integer.MAX_VALUE &&
+                    distance.get(edgeNode.src) + edgeNode.weight < distance.get(edgeNode.des)){
+                System.out.println("Graph contains Negative weight");
+                return;
+            }
+        }
+
+
+        System.out.println(distance);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Time complexity - O(EV)
     //Space complexity - O(V)

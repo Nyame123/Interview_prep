@@ -1,7 +1,5 @@
 package com.bis.interview_prep.treeAndGraph.medium;
 
-import java.util.Arrays;
-
 /**
  * Dijkstra’s shortest path algorithm | Greedy Algo-7
  * Difficulty Level : Medium
@@ -52,77 +50,8 @@ public class DijkstraShortestPathAdjacencyMatrix {
                 {0, 0, 0, 0, 0, 2, 0, 1, 6},
                 {8, 11, 0, 0, 0, 0, 1, 0, 7},
                 {0, 0, 2, 0, 0, 0, 6, 7, 0}};
-        adMat(graph,0,V);
         dijkstra(graph, 0);
     }
-    //{0=0, 1=4, 2=12, 3=25, 4=21, 5=11, 6=9, 7=8, 8=15}
-
-    //min distance in the graph
-    static int getMinFromGraph(boolean[] visited, int v, int[] distance){
-        int min = Integer.MAX_VALUE;
-        int minIndex = -1;
-        for (int i = 0; i < v; i++) {
-            if (!visited[i] && distance[i] < min){
-                min = distance[i];
-                minIndex = i;
-            }
-        }
-
-        return minIndex;
-    }
-
-    //Dijkstra algo using adjacency matrix
-    static void adMat(int[][] graph, int src, int v){
-        boolean[] visited = new boolean[v];
-        int[] distance = new int[v];
-
-        for (int vert = 0; vert < v; vert++) {
-            distance[vert] = Integer.MAX_VALUE;
-        }
-
-        distance[src] = 0;
-        for (int vert = 0; vert < v; vert++) {
-
-            //get min distance
-            int u = getMinFromGraph(visited,v, distance);
-            visited[u] = true;
-            for (int i = 0; i < v; i++) {
-                //relax the adjacent distance of the vertex
-                if (!visited[i] && graph[u][i] != 0 && distance[u] + graph[u][i] < distance[i]){
-                    distance[i] = distance[u] + graph[u][i];
-                }
-            }
-        }
-
-        System.out.println(Arrays.toString(distance));
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     static int minDistance(int dist[], Boolean sptSet[]) {
         // Initialize min value

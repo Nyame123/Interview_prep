@@ -1,6 +1,10 @@
 package com.bis.interview_prep.treeAndGraph.hard;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Kruskal’s Minimum Spanning Tree Algorithm | Greedy Algo-2
@@ -206,36 +210,133 @@ public class KruskalMinSpanningTree {
     }
 }
 
+class KruskaIMpl {
 
-//Kruskal Minimum Spanning Tree Algorithm
+    public static void main(String[] args) {
+ /* Let us create following weighted graph
+                 10
+            0--------1
+            |  \     |
+           6|   5\   |15
+            |      \ |
+            2--------3
+                4       */
+        int V = 4; // Number of vertices in graph
 
-class KruskalMinSpanningImp{
 
-    static class Subset{
-        int parent;
-        int rank = 0;
-        Subset(int par){
-            this.parent = par;
+        int[][] graph1 = {
+                {0,10,6,5},
+                {0,0,14,15},
+                {0,0,0,4},
+                {0,0,0,0},
+        };
+
+        kruskalIMP(graph1,V);
+    }
+
+    static void kruskalIMP(int[][] graph, int v) {
+        int n = graph.length;
+        int m = graph[0].length;
+        List<Edgess> edgessList = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i != j && graph[i][j] != 0)
+                    addEdge(edgessList, graph[i][j], i, j);
+            }
+        }
+
+        int edCount = edgessList.size();
+        Group[] groups = new Group[v];
+        for (int i = 0; i < v; i++) {
+            Group group =  new Group();
+            group.parent = i;
+            groups[i] = group;
+        }
+
+        //sort the edges
+        Collections.sort(edgessList, Comparator.comparingInt(edgess -> edgess.weight));
+        List<Edgess> minSpanningResult = new LinkedList<>();
+        int i = 0;
+        while (i < edCount-1){
+            Edgess edgess = edgessList.get(i++);
+
+            int parentX = findGroup(groups,edgess.src);
+            int parentY = findGroup(groups,edgess.des);
+
+            if (parentX != parentY){
+                minSpanningResult.add(edgess);
+                unionByRank(parentX,parentY,groups);
+            }
+
+        }
+
+        int minimumCost = 0;
+        for (int j = 0; j < minSpanningResult.size(); j++) {
+            Edgess edge = minSpanningResult.get(j);
+            System.out.printf("%d -- %d -- %d\n", edge.weight, edge.src, edge.des);
+            minimumCost += edge.weight;
+        }
+        System.out.println("Minimum spanning tree "+minimumCost);
+    }
+
+    static int findGroup(Group[] groups, int u){
+        if (groups[u].parent != u){
+           return findGroup(groups,groups[u].parent);
+        }
+
+        return groups[u].parent;
+    }
+
+    static void unionByRank(int u, int v, Group[] groups){
+        if (groups[u].rank > groups[v].rank){
+            groups[v].parent = groups[u].parent;
+        }else if (groups[v].rank > groups[u].rank){
+            groups[u].parent = groups[v].parent;
+        }else{
+            groups[v].parent = groups[u].parent;
+            groups[u].rank++;
         }
     }
 
-    static class Edge implements Comparable<Edge>{
-        int weight;
-        int src;
-        int destination;
+    static void addEdge(List<Edgess> edgesses, int w, int u, int v) {
+        Edgess edgess = new Edgess();
+        edgess.src = u;
+        edgess.des = v;
+        edgess.weight = w;
+        edgesses.add(edgess);
+    }
 
-        Edge(){
+    static class Group {
+        int rank = 0;
+        int parent = -1;
+    }
 
+    static class Edgess {
+        int src = 0;
+        int des = 0;
+        int weight = 0;
+    }
+}
+
+//Kruskal Minimum Spanning Tree Algorithm
+
+class KruskalMinSpanningImp {
+
+    Edge[] edges;
+    Subset[] subsets;
+
+    KruskalMinSpanningImp(int v, int e) {
+        edges = new Edge[e];
+        subsets = new Subset[v];
+
+        //initialize the edges
+        for (int i = 0; i < e; i++) {
+            edges[i] = new Edge();
         }
 
-        Edge(int w,int s, int des){
-            this.weight = w;
-            this.src = s;
-            this.destination = des;
-        }
-
-        public int compareTo(Edge nextEdge){
-            return this.weight - nextEdge.weight;
+        //initializing the subsets
+        for (int i = 0; i < v; i++) {
+            subsets[i] = new Subset(i);
         }
     }
 
@@ -250,71 +351,52 @@ class KruskalMinSpanningImp{
                 4       */
         int V = 4; // Number of vertices in graph
         int E = 6; // Number of edges in graph
-        KruskalMinSpanningImp graph = new KruskalMinSpanningImp(V,E);
+        KruskalMinSpanningImp graph = new KruskalMinSpanningImp(V, E);
 
-        graph.addEdge(0,0,1,10);
-        graph.addEdge(1,0,2,6);
-        graph.addEdge(2,0,3,5);
-        graph.addEdge(3,1,3,15);
-        graph.addEdge(4,2,3,4);
-        graph.addEdge(5,1,2,14);
+        graph.addEdge(0, 0, 1, 10);
+        graph.addEdge(1, 0, 2, 6);
+        graph.addEdge(2, 0, 3, 5);
+        graph.addEdge(3, 1, 3, 15);
+        graph.addEdge(4, 2, 3, 4);
+        graph.addEdge(5, 1, 2, 14);
 
-        graph.miniSpanningTree(graph.edges,graph.subsets,V);
+        graph.miniSpanningTree(graph.edges, graph.subsets, V);
 
-    }
-
-    Edge[] edges;
-    Subset[] subsets;
-
-
-    KruskalMinSpanningImp(int v,int e){
-        edges = new Edge[e];
-        subsets = new Subset[v];
-
-        //initialize the edges
-        for(int i=0; i < e; i++){
-            edges[i] = new Edge();
-        }
-
-        //initializing the subsets
-        for(int i=0; i < v; i++){
-            subsets[i] = new Subset(i);
-        }
     }
 
     //build graph
-    void addEdge(int pos,int u,int v,int weight){
-        Edge newEdge = new Edge(weight,u,v);
+    void addEdge(int pos, int u, int v, int weight) {
+        Edge newEdge = new Edge(weight, u, v);
         edges[pos] = newEdge;
     }
 
     //find the minimum spanning tree
-    void miniSpanningTree(Edge[] graph,Subset[] subsets, int v){
-        Edge[] results = new Edge[v-1];
+    void miniSpanningTree(Edge[] graph, Subset[] subsets, int v) {
+        Edge[] results = new Edge[v - 1];
 
         //sort the graph in ascending order
         Arrays.sort(graph);
 
         int e = 0;
         int i = 0;
-        while(e < v-1){
+        while (e < v - 1) {
 
             //find the subset of source;
             Edge edge = graph[i++];
-            int parentSrc = findSubset(subsets,edge.src);
-            int parentDes = findSubset(subsets,edge.destination);
-            if(parentSrc != parentDes){
+            int parentSrc = findSubset(subsets, edge.src);
+            int parentDes = findSubset(subsets, edge.destination);
+            if (parentSrc != parentDes) {
                 results[e++] = edge;
             }
 
-            unionByRank(subsets,parentSrc,parentDes);
+            unionByRank(subsets, parentSrc, parentDes);
 
         }
 
         int minimumCost = 0;
-        for(int j = 0; j < results.length; j++){
+        for (int j = 0; j < results.length; j++) {
             Edge edge = results[j];
-            System.out.printf("%d -- %d -- %d\n",edge.weight,edge.src,edge.destination);
+            System.out.printf("%d -- %d -- %d\n", edge.weight, edge.src, edge.destination);
             minimumCost += edge.weight;
         }
 
@@ -324,26 +406,55 @@ class KruskalMinSpanningImp{
     }
 
     //find the subset a vertex belong to
-    int findSubset(Subset[] subsets,int v){
-        if(subsets[v].parent != v){
-            return findSubset(subsets,subsets[v].parent);
+    int findSubset(Subset[] subsets, int v) {
+        if (subsets[v].parent != v) {
+            return findSubset(subsets, subsets[v].parent);
         }
 
         return subsets[v].parent;
     }
 
     //union the vertices of different parents based on their ranks
-    void unionByRank(Subset[] subsets, int v, int u){
+    void unionByRank(Subset[] subsets, int v, int u) {
         Subset x = subsets[v];
         Subset y = subsets[u];
 
-        if(x.rank > y.rank){
+        if (x.rank > y.rank) {
             y.parent = x.parent;
-        }else if(x.rank < y.rank){
+        } else if (x.rank < y.rank) {
             x.parent = y.parent;
-        }else{
+        } else {
             x.parent = y.parent;
             y.rank++;
+        }
+    }
+
+    static class Subset {
+        int parent;
+        int rank = 0;
+
+        Subset(int par) {
+            this.parent = par;
+        }
+    }
+
+    static class Edge implements Comparable<Edge> {
+        int weight;
+        int src;
+        int destination;
+
+        Edge() {
+
+        }
+
+        Edge(int w, int s, int des) {
+            this.weight = w;
+            this.src = s;
+            this.destination = des;
+        }
+
+        public int compareTo(Edge nextEdge) {
+            return this.weight - nextEdge.weight;
         }
     }
 

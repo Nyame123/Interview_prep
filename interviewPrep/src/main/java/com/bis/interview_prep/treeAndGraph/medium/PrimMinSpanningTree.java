@@ -7,9 +7,12 @@ import com.bis.interview_prep.ordinal.graphs.Vertex;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * Find minimum spanning tree using Prim's algorithm
@@ -77,7 +80,7 @@ public class PrimMinSpanningTree {
         }
 
         //start from any random vertex
-       //Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
+        //Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
         Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
 
         //for the start vertex decrease the value in heap + map to 0
@@ -115,6 +118,167 @@ public class PrimMinSpanningTree {
     }
 }
 
+class PrimImp {
+
+    public static void main(String[] args) {
+        int V = 4; // Number of vertices in graph
+/* Let us create following weighted graph
+                 10
+            0--------1
+            |  \     |
+           6|   5\   |15
+            |      \ |
+            2--------3
+                4       */
+
+        int[][] graph1 = {
+                {0, 10, 6, 5},
+                {10, 0, 14, 15},
+                {6, 0, 0, 4},
+                {5, 15, 4, 0},
+        };
+
+        primMain(graph1, V, 3);
+    }
+
+    static void primMain(int[][] graph, int v, int src) {
+        HashMap<Integer, List<PrimNode>> adjList = new HashMap<>();
+        HashMap<Integer, PrimNode> nodeHashMap = new HashMap<>();
+        HashMap<Integer, Boolean> visited = new HashMap<>();
+        HashMap<String, PrimEdge> edgeResult = new HashMap<>();
+        HashMap<Integer, PrimEdge> vertEdgeResult = new HashMap<>();
+        List<PrimEdge> primEdges = new LinkedList<>();
+
+        PriorityQueue<PrimNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(primNode -> primNode.weight));
+
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[0].length; j++) {
+                if (i != j && graph[i][j] != 0) {
+                    addEdge(i, j, graph[i][j], adjList, edgeResult);
+                }
+            }
+        }
+
+        for (int i = 0; i < v; i++) {
+            PrimNode node = new PrimNode();
+            node.u = i;
+            if (i == src) {
+                node.weight = 0;
+            } else {
+                node.weight = Integer.MAX_VALUE;
+            }
+            nodeHashMap.put(i, node);
+            minHeap.add(node);
+            visited.put(i, false);
+        }
+
+        while (!minHeap.isEmpty()) {
+            PrimNode curNode = minHeap.poll();
+            visited.put(curNode.u, true);
+
+            if (vertEdgeResult.get(curNode.u) != null)
+                primEdges.add(vertEdgeResult.get(curNode.u));
+
+            if (!adjList.containsKey(curNode.u))
+                continue;
+
+            for (int i = 0; i < adjList.get(curNode.u).size(); i++) {
+                PrimNode neigh = adjList.get(curNode.u).get(i);
+                if (!visited.get(neigh.u)) {
+                    String key = String.format("%s,%s", curNode.u, neigh.u);
+                    PrimEdge edge = edgeResult.get(key);
+                    if (edge.weight < nodeHashMap.get(neigh.u).weight) {
+                        nodeHashMap.get(neigh.u).weight = edge.weight;
+                        decreaseMinHeap(minHeap, neigh.u, neigh.weight);
+                        vertEdgeResult.put(neigh.u, edge);
+                    }
+                }
+            }
+        }
+
+        int minimumCost = 0;
+        for (int j = 0; j < primEdges.size(); j++) {
+            PrimEdge edge = primEdges.get(j);
+            System.out.printf("%d -- %d -- %d\n", edge.weight, edge.u, edge.v);
+            minimumCost += edge.weight;
+        }
+        System.out.println("Minimum spanning tree " + minimumCost);
+
+    }
+
+    static void decreaseMinHeap(PriorityQueue<PrimNode> minHeap, int u, int weight) {
+        List<PrimNode> list = new LinkedList<>();
+        while (!minHeap.isEmpty() && minHeap.peek().u != u) {
+            list.add(minHeap.poll());
+        }
+
+        if (minHeap.isEmpty()) {
+            PrimNode node = new PrimNode();
+            node.weight = weight;
+            node.u = u;
+            minHeap.add(node);
+        } else {
+            minHeap.peek().weight = weight;
+        }
+
+        minHeap.addAll(list);
+    }
+
+    static void addEdge(int u, int v, int weight, HashMap<Integer, List<PrimNode>> graph, HashMap<String, PrimEdge> edgeResult) {
+        if (!graph.containsKey(u)) {
+            graph.put(u, new LinkedList<>());
+        }
+        PrimNode node = new PrimNode();
+        node.u = v;
+        node.weight = weight;
+        graph.get(u).add(node);
+
+        //key
+        String key = String.format("%s,%s", u, v);
+        PrimEdge edge = new PrimEdge();
+        edge.u = u;
+        edge.v = v;
+        edge.weight = weight;
+        edgeResult.put(key, edge);
+    }
+
+    static int findVerticeWithMinWeight(HashMap<Integer, List<PrimNode>> graph) {
+        int min = Integer.MAX_VALUE;
+        int minVert = -1;
+
+        for (Map.Entry<Integer, List<PrimNode>> entry : graph.entrySet()) {
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                if (entry.getValue().get(i).weight < min) {
+                    min = entry.getValue().get(i).weight;
+                    minVert = entry.getKey();
+                }
+            }
+        }
+
+        return minVert;
+    }
+
+    static class PrimNode {
+        int u;
+        int weight;
+    }
+
+    static class PrimEdge {
+        int u;
+        int v;
+        int weight;
+
+        @Override
+        public String toString() {
+            return "PrimEdge{" +
+                    "u=" + u +
+                    ", v=" + v +
+                    ", weight=" + weight +
+                    '}';
+        }
+    }
+}
+
 //finding the minimum spanning tree with Prims Algorithm
 class PrimMinSpannigTreeImp {
 
@@ -144,9 +308,9 @@ class PrimMinSpannigTreeImp {
 
         //first vertex
         Vertex vertex;
-        if (vertices.containsKey(u)){
+        if (vertices.containsKey(u)) {
             vertex = vertices.get(u);
-        }else {
+        } else {
             vertex = new Vertex();
             vertex.key = u;
         }
@@ -154,9 +318,9 @@ class PrimMinSpannigTreeImp {
 
         //second vertex
         Vertex vertex1;
-        if (vertices.containsKey(v)){
+        if (vertices.containsKey(v)) {
             vertex1 = vertices.get(v);
-        }else {
+        } else {
             vertex1 = new Vertex();
             vertex1.key = v;
         }
@@ -173,11 +337,11 @@ class PrimMinSpannigTreeImp {
 
         if (!vertices.containsKey(vertex.key)) {
             graph.add(vertex);
-            vertices.put(vertex.key,vertex);
+            vertices.put(vertex.key, vertex);
         }
-        if (!vertices.containsKey(vertex1.key)){
+        if (!vertices.containsKey(vertex1.key)) {
             graph.add(vertex1);
-            vertices.put(vertex1.key,vertex1);
+            vertices.put(vertex1.key, vertex1);
         }
 
 
@@ -329,7 +493,7 @@ class BinaryMinHeapImp<T> {
 
         maps.remove(node.key);
         maps.remove(lastNode.key);
-        maps.put(heaps.get(0).key,0);
+        maps.put(heaps.get(0).key, 0);
         heaps.remove(lastNode);
         size--;
         int parentIndex = 0;

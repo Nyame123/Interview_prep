@@ -54,6 +54,10 @@ public class DijkstraShortestPathMinHeap {
         Map<Vertex<Integer>, Integer> distance = dsp.shortestPath(graph, sourceVertex);
         System.out.print(distance);
 
+        usingGraphMatrix();
+    }
+
+    static void usingGraphMatrix() {
         int graph1[][] = new int[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0},
                 {4, 0, 8, 0, 0, 0, 0, 11, 0},
                 {0, 8, 0, 7, 0, 4, 0, 0, 2},
@@ -66,7 +70,7 @@ public class DijkstraShortestPathMinHeap {
 
         int vertice = 9;
 
-        shortestPath(graph1,vertice,0);
+        shortestPath(graph1, vertice, 0);
     }
 
     static void shortestPath(int[][] graph, int vertice, int src) {
@@ -77,19 +81,19 @@ public class DijkstraShortestPathMinHeap {
         PriorityQueue<NodeVert> minHeap = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.distance));
 
         for (int i = 0; i < vertice; i++) {
-            adjList.put(i,new LinkedList<>());
+            adjList.put(i, new LinkedList<>());
             distance.put(i, Integer.MAX_VALUE);
             visited.put(i, false);
         }
 
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph[0].length; j++) {
-               if (graph[i][j] != 0){
-                   NodeVert edges = new NodeVert();
-                   edges.key = j;
-                   edges.distance = graph[i][j];
-                   adjList.get(i).add(edges);
-               }
+                if (graph[i][j] != 0) {
+                    NodeVert edges = new NodeVert();
+                    edges.key = j;
+                    edges.distance = graph[i][j];
+                    adjList.get(i).add(edges);
+                }
             }
         }
 
@@ -100,20 +104,20 @@ public class DijkstraShortestPathMinHeap {
         distance.put(src, 0);
 
         //[0, 4, 12, 19, 21, 11, 9, 8, 14]
-        while (!minHeap.isEmpty()){
-            NodeVert minNode =  minHeap.poll();
-            distance.put(minNode.key,minNode.distance);
-            visited.put(minNode.key,true);
-            for(NodeVert neigh: adjList.get(minNode.key)){
+        while (!minHeap.isEmpty()) {
+            NodeVert minNode = minHeap.poll();
+            distance.put(minNode.key, minNode.distance);
+            visited.put(minNode.key, true);
+            for (NodeVert neigh : adjList.get(minNode.key)) {
 
                 if (visited.get(neigh.key))
                     continue;
 
                 int newDistance = distance.get(minNode.key) + neigh.distance;
-                if (distance.get(neigh.key) > newDistance){
-                    distance.put(neigh.key,newDistance);
+                if (distance.get(neigh.key) > newDistance) {
+                    distance.put(neigh.key, newDistance);
 
-                    reduceHeap(minHeap,neigh.key,newDistance);
+                    reduceHeap(minHeap, neigh.key, newDistance);
                 }
             }
         }
@@ -122,15 +126,15 @@ public class DijkstraShortestPathMinHeap {
         System.out.println(distance);
     }
 
-    static void reduceHeap(PriorityQueue<NodeVert> queue,int v, int distance){
+    static void reduceHeap(PriorityQueue<NodeVert> queue, int v, int distance) {
         List<NodeVert> list = new LinkedList<>();
-        while (!queue.isEmpty() && queue.peek().key != v){
+        while (!queue.isEmpty() && queue.peek().key != v) {
             list.add(queue.poll());
         }
 
-        if (!queue.isEmpty()){
+        if (!queue.isEmpty()) {
             queue.peek().distance = distance;
-        }else{
+        } else {
             NodeVert neighNode = new NodeVert();
             neighNode.key = v;
             neighNode.distance = distance;

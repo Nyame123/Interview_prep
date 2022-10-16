@@ -1,69 +1,67 @@
 package com.bis.interview_prep.dynamicProgramming;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Input : mat[][] = {{1, 3, 3},
- *                    {2, 1, 4},
- *                   {0, 6, 4}};
+ * {2, 1, 4},
+ * {0, 6, 4}};
  * Output : 12
  * {(1,0)->(2,1)->(2,2)}
- *
+ * <p>
  * Input: mat[][] = { {1, 3, 1, 5},
- *                    {2, 2, 4, 1},
- *                    {5, 0, 2, 3},
- *                    {0, 6, 1, 2}};
+ * {2, 2, 4, 1},
+ * {5, 0, 2, 3},
+ * {0, 6, 1, 2}};
  * Output : 16
  * (2,0) -> (1,1) -> (1,2) -> (0,3) OR
  * (2,0) -> (3,1) -> (2,2) -> (2,3)
- *
+ * <p>
  * Input : mat[][] = {{10, 33, 13, 15},
- *                   {22, 21, 04, 1},
- *                   {5, 0, 2, 3},
- *                   {0, 6, 14, 2}};
+ * {22, 21, 04, 1},
+ * {5, 0, 2, 3},
+ * {0, 6, 14, 2}};
  * Output : 83
- *
+ * <p>
  * Given a gold mine of n*m dimensions. Each field
  * in this mine contains a positive integer which is the amount of gold in tons.
  * Initially the miner is at first column but can be at any row. He can move only (right->,right up /,right down\)
  * that is from a given cell, the miner can move to the cell diagonally up towards the right or right or
  * diagonally down towards the right. Find out maximum amount of gold he can collect.
- *
+ * <p>
  * https://www.geeksforgeeks.org/gold-mine-problem/
  **/
 public class GoldMiner {
 
+    static final int MAX = 100;
+
     public static void main(String[] args) {
-        int gold[][]= {{10, 33, 13, 15}, {22, 21, 04, 1}, {5, 0, 2, 3}, {0, 6, 14, 2}};
+        int gold[][] = {{10, 33, 13, 15}, {22, 21, 04, 1}, {5, 0, 2, 3}, {0, 6, 14, 2}};
 
         int m = 3, n = 3;
-
-        System.out.print(maxGoldRecursive(gold,0,0,new HashMap<>()));
+        System.out.print(maxGoldRecursive(gold, 0, 0, new HashMap<>()));
     }
 
-    static int maxGoldRecursive(int[][] gold, int row, int col, Map<String,Integer> map){
-        String key = String.format("%d,%d",row,col);
+    static int maxGoldRecursive(int[][] gold, int row, int col, Map<String, Integer> map) {
+        String key = String.format("%d,%d", row, col);
         if (map.containsKey(key)) return map.get(key);
         if (col < 0 || col >= gold[0].length || row < 0 || row >= gold.length) return 0;
 
         int max = 0;
         for (int i = row; i < gold.length; i++) {
-            int right =  maxGoldRecursive(gold,i,col+1,map);
-            int right_up = maxGoldRecursive(gold,i-1,col+1,map);
-            int right_down = maxGoldRecursive(gold,i+1,col+1,map);
-            int total = (col >= gold[0].length)? 0 : gold[i][col] + Math.max(right,Math.max(right_up,right_down));
-            max = Math.max(total,max);
+            int right = maxGoldRecursive(gold, i, col + 1, map);
+            int right_up = maxGoldRecursive(gold, i - 1, col + 1, map);
+            int right_down = maxGoldRecursive(gold, i + 1, col + 1, map);
+            int total = (col >= gold[0].length) ? 0 : gold[i][col] + Math.max(right, Math.max(right_up, right_down));
+            max = Math.max(total, max);
             //res[row] += total;
-            map.put(key,max);
+            map.put(key, max);
         }
 
 
         return max;
     }
-
-    static final int MAX = 100;
 
     // Returns maximum amount of gold that
     // can be collected when journey started
