@@ -2,6 +2,7 @@ package com.bis.interview_prep.dynamicProgramming;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,10 +15,68 @@ import java.util.List;
 public class LongestDivisibleSubset {
 
     public static void main(String[] args) {
-        int[] arr = {1, 3, 6, 24};
+        int[] arr = {18, 1, 3, 6, 13, 17};
+        longestDivisible(arr);
         List<Integer> res = longestDivisibleSubset(arr);
         System.out.println(res);
     }
+
+    //Longest Divisible subset
+    static void longestDivisible(int[] arr){
+        int n = arr.length;
+        int[] dp = new int[n];
+        int maxLength = 0;
+        int maxIndex = 0;
+        Arrays.sort(arr);
+        dp[0] = 1;
+        for (int i = 1; i < n; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (arr[i] % arr[j] == 0){
+                    max = Math.max(max,dp[j]);
+                }
+            }
+
+            dp[i] = max+1;
+            if (maxLength < dp[i]){
+                maxIndex = i;
+                maxLength = dp[i];
+            }
+        }
+
+        System.out.println(maxLength);
+
+        List<Integer> res = new LinkedList<>();
+        res.add(arr[maxIndex]);
+        int lastDiv = arr[maxIndex];
+        maxIndex--;
+        maxLength--;
+        while (maxIndex >= 0){
+            if (dp[maxIndex] == maxLength && lastDiv % dp[maxIndex] == 0){
+                res.add(arr[maxIndex]);
+                lastDiv = arr[maxIndex];
+                maxLength--;
+            }
+
+            maxIndex--;
+        }
+
+        System.out.println(res);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * In this problem, we can use dynamic programming to solve it.

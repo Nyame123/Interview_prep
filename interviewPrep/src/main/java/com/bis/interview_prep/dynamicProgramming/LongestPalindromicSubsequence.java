@@ -5,10 +5,39 @@ public class LongestPalindromicSubsequence {
     public static void main(String[] args) {
         String str = "GEEKSFORGEEKS";
         //int res = calculateRecursive(str.toCharArray(),0,str.length());
+        longPalindromicSub(str);
        int res = dynamicRecursive(str.toCharArray(),0,str.length()-1);
        //int res = calculate1(str.toCharArray());
        //int res1 = longestPalindromicLen(str);
        System.out.print(res);
+    }
+
+
+    //longest palindromic subsequence
+    static void longPalindromicSub(String s){
+        int n = s.length();
+        int[][] dp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+
+        for (int len = 1; len < n; len++) {
+
+            for (int i = 0,j = len; i < n && j < n; j++, i++) {
+
+                boolean isEqual = s.charAt(i) == s.charAt(j);
+                if (len == 1 && isEqual){
+                    dp[i][j] = 2;
+                }else if (isEqual){
+                    dp[i][j] = dp[i+1][j-1] + 2;
+                }else{
+                    dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
+                }
+            }
+        }
+
+        System.out.println(dp[0][n-1]);
     }
 
     public static int calculate1(char []str){
@@ -16,6 +45,7 @@ public class LongestPalindromicSubsequence {
         for(int i=0; i < str.length; i++){
             T[i][i] = 1;
         }
+
         for(int l = 2; l <= str.length; l++){
             for(int i = 0; i < str.length-l + 1; i++){
                 int j = i + l - 1;

@@ -25,8 +25,32 @@ public class BoxStacks {
         boxes.add(new Box(4, 6, 6));
         boxes.add(new Box(2, 5, 3));
 
+        boxStackingDp(boxes);
         int height = boxHeightChoices(boxes);
         System.out.println(height);
+    }
+
+    //box stacks dp
+    static void boxStackingDp(List<Box> boxes){
+        Collections.sort(boxes);
+        int n = boxes.size();
+        int[] dp = new int[n];
+        dp[0] = boxes.get(0).height;
+        for (int i = 1; i < n; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                Box one = boxes.get(i);
+                Box two = boxes.get(j);
+
+                if (one.canBeAbove(two)){
+                   max = Math.max(max, dp[j]);
+                }
+            }
+
+            dp[i] = max + boxes.get(i).height;
+        }
+
+        System.out.println(dp[n-1]);
     }
 
     static int boxHeight(List<Box> boxes) {

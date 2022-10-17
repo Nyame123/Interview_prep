@@ -27,9 +27,82 @@ public class MaxSizeSquareMatrix {
                 {0, 0, 0, 0, 0}
         };
 
+        maxSizeSquared(mat);
         int maxSize = maxSizeSquareOptimizedSpace(mat);
         System.out.println(maxSize);
     }
+
+    //longest max size of a square
+    static void maxSizeSquared(int[][] mat){
+        System.out.println();
+        int n = mat.length;
+        int m = mat[0].length;
+        int[][] dp = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = mat[i][0];
+        }
+
+        for (int i = 0; i < m; i++) {
+            dp[0][i] = mat[0][i];
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                if (mat[i][j] == 1){
+                    dp[i][j] = Math.min(dp[i][j-1],Math.min(dp[i-1][j],dp[i-1][j-1])) + 1;
+                }else{
+                    dp[i][j] = 0;
+                }
+            }
+        }
+
+        int maxI = 0, maxJ = 0;
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (dp[i][j] > max){
+                    max = Math.max(max,dp[i][j]);
+                    maxI = i;
+                    maxJ = j;
+                }
+            }
+        }
+
+        System.out.println(max);
+
+        for (int i = maxI-max+1; i <= maxI; i++) {
+            for (int j = maxJ-max+1; j <= max; j++) {
+
+                System.out.print(mat[i][j]+",");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Finding the maximum size of a matrix with all ones can be solved
