@@ -132,7 +132,6 @@ class FindWordUsingTrie {
         System.out.println(wordsInGrid);
     }
 
-
     static List<String> findBoggleWords(String[] dictionary, char[][] boggle) {
         TrieNode root = new TrieNode();
         List<String> ans = new ArrayList<>();
@@ -177,7 +176,7 @@ class FindWordUsingTrie {
         for (int child = 0; child < 26; child++) {
             if (trieNode.child[child] != null) {
                 for (int dirx = 0; dirx < x.length; dirx++) {
-                   searchAllDirections(trieNode.child[child], boggle, i + y[dirx], j + x[dirx], ans);
+                    searchAllDirections(trieNode.child[child], boggle, i + y[dirx], j + x[dirx], ans);
                 }
             }
         }
