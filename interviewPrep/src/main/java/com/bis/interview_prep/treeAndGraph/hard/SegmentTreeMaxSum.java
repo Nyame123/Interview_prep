@@ -1,7 +1,6 @@
 package com.bis.interview_prep.treeAndGraph.hard;
 
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Segment Tree | Set 1 (Sum of given range)
@@ -27,7 +26,7 @@ public class SegmentTreeMaxSum {
         int sum = segmentTree.getSum(segmentTree.segmentArr, 0, n - 1, 1, 3, 0);
         System.out.println("Sum = " + sum);
 
-        segmentTree.updateSegTree(arr,segmentTree.segmentArr,10,1, 0, n-1);
+        segmentTree.updateSegTree(arr, segmentTree.segmentArr, 10, 1, 0, n - 1);
         int sumUpdated = segmentTree.getSum(segmentTree.segmentArr, 0, n - 1, 1, 3, 0);
         System.out.println("Sum after Update = " + sumUpdated);
 
@@ -45,8 +44,8 @@ public class SegmentTreeMaxSum {
         return false;
     }
 
-    boolean isPowerOfTwoBitManip(int n){
-        return (n != 0) && ((n & (n-1)) == 0);
+    boolean isPowerOfTwoBitManip(int n) {
+        return (n != 0) && ((n & (n - 1)) == 0);
     }
 
     int smallestNextPower(int n) {
@@ -83,15 +82,15 @@ public class SegmentTreeMaxSum {
         return node;
     }
 
-    void updateSegTree(int[] arr,Node[] segArr, int x, int i, int start, int end){
-        if (i < 0 || i > end){
+    void updateSegTree(int[] arr, Node[] segArr, int x, int i, int start, int end) {
+        if (i < 0 || i > end) {
             System.out.println("Invalid update");
             return;
         }
 
         int diff = x - arr[i];
         arr[i] = x;
-        updateValue(segArr,diff,i,start,end);
+        updateValue(segArr, diff, i, start, end);
     }
 
     void updateValue(Node[] segArr, int x, int i, int start, int end) {
@@ -178,9 +177,9 @@ public class SegmentTreeMaxSum {
 
     }
 
-    private int getSizeWithLog(int n){
-        int x = (int) Math.ceil(Math.log(n)/Math.log(2));
-        return (int) (2*Math.pow(2,x) - 1);
+    private int getSizeWithLog(int n) {
+        int x = (int) Math.ceil(Math.log(n) / Math.log(2));
+        return (int) (2 * Math.pow(2, x) - 1);
     }
 
     private int getSize(int n) {
@@ -231,12 +230,17 @@ class SegmentTree {
     public static void main(String args[]) {
         int arr[] = {1, 3, 5, 7, 9, 11};
         int n = arr.length;
+
+       int[] seg = buildSegmentTree(arr);
+        getSumRange(n,seg,1,3);
+        updateIndex(n,10, 1,seg, arr);
+        getSumRange(n,seg,1,3);
         SegmentTree tree = new SegmentTree(arr, n);
 
         // Build segment tree from given array
 
         // Print sum of values in array from index 1 to 3
-        System.out.println("Sum of values in given range = " +
+       /* System.out.println("Sum of values in given range = " +
                 tree.getSum(n, 1, 3));
 
         // Update: set arr[1] = 10 and update corresponding segment
@@ -245,8 +249,79 @@ class SegmentTree {
 
         // Find sum after the value is updated
         System.out.println("Updated sum of values in given range = " +
-                tree.getSum(n, 1, 3));
+                tree.getSum(n, 1, 3));*/
     }
+
+
+    //Segment tree construction
+    static int[] buildSegmentTree(int[] arr) {
+        int n = arr.length;
+        int depth = (int) Math.ceil(Math.log(n) / Math.log(2));
+        int segLen = (int) (2 * Math.pow(2, depth) - 1);
+        int[] segmentTree = new int[segLen];
+
+        buildRec(arr, 0, n - 1, 0, segmentTree);
+
+        return segmentTree;
+    }
+
+    static int buildRec(int[] arr, int ss, int se, int i, int[] segmentTree) {
+        if (se == ss) {
+            segmentTree[i] = arr[ss];
+            return segmentTree[i];
+        }
+
+        int mid = mid(ss, se);
+
+        segmentTree[i] = buildRec(arr, ss, mid, 2 * i + 1, segmentTree) +
+        buildRec(arr, mid + 1, se, 2 * i + 2, segmentTree);
+
+       return segmentTree[i];
+    }
+
+    static void getSumRange(int n,int[] st, int qs, int qe) {
+        int sum = getSumRangeRec(st, qs, qe, 0, n-1, 0);
+        System.out.println(sum);
+    }
+
+    static int getSumRangeRec(int[] st, int qs, int qe, int ss, int se, int si) {
+        if (qs <= ss && qe >= se) {
+            return st[si];
+        }
+
+        if (qs > se || qe < ss)
+            return 0;
+
+        int mid = mid(ss, se);
+        return getSumRangeRec(st, qs, qe, ss, mid, 2 * si + 1) +
+                getSumRangeRec(st, qs, qe, mid + 1, se, 2 * si + 2);
+    }
+
+    static void updateIndex(int n,int val, int i, int[] seg,int[] arr) {
+
+        int newva = val-arr[i];
+        arr[i] = val;
+        updateIndexRec(newva, 0, n - 1, i, 0, seg);
+        System.out.println(seg[i]);
+    }
+
+    static void updateIndexRec(int diff, int ss, int se,int i, int si, int[] st) {
+        if (i < ss || i > se)
+            return;
+
+        st[si] += diff;
+
+        if (ss != se) {
+            int mid = mid(ss, se);
+            updateIndexRec(diff, ss, mid, i,2 * si + 1, st);
+            updateIndexRec(diff, mid+1, se,i, 2 * si + 2, st);
+        }
+    }
+
+    static int mid(int ss, int se) {
+        return ss + (se - ss) / 2;
+    }
+
 
     // A utility function to get the middle index from corner indexes.
     int getMid(int s, int e) {

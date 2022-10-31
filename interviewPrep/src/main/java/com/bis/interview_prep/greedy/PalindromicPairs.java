@@ -191,66 +191,96 @@ class PalindromicPairsTrie {
 
     public static void main(String[] args) {
         String[] words = {"code", "edoc", "da", "d"};
+        checkPalindromicPairs(words);
         List<List<Integer>> res = new PalindromicPairsTrie().palindromePairs(words);
         System.out.println(res);
     }
 
-  /*  public List<List<Integer>> palindromePairs(String[] words) {
-        Trie root = new Trie();
-        int num =0;
-        for(String s: words){
-            Trie temp = root;
-            for(char c: s.toCharArray()){
-                if(temp.arr[c-'a']==null){
-                    temp.arr[c-'a']= new Trie();
-                }
-                temp = temp.arr[c-'a'];
-            }
-            temp.index = num++;
+
+    static void checkPalindromicPairs(String[] words){
+        int n = words.length;
+        TrieNode root = new TrieNode();
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            insertWordRev(root,words[i],i);
         }
-        for(int i=0;i<words.length;i++){
-            match(words[i],i,root);
+
+        for (int i = 0; i < n; i++) {
+            matchWord(root,ans,words[i],i);
         }
-        return list;
+
+        System.out.println(ans);
     }
-    //handle empty string case
-    // three cases
-    //1. equal length
-    //2. string in array greater
-    // 3. string in trie greater
-    public void dfs(Trie root,int id,StringBuilder sb,int that){
-        if(root.index!=-1 && root.index!=that){
-            if(palindrome(sb.toString(),0,sb.length()-1)){
-                list.add(Arrays.asList(root.index,id));
-            }
-        }
-        for(char c='a';c<='z';c++){
-            if(root.arr[c-'a']!=null){
-                sb.append(c);
-                dfs(root.arr[c-'a'],id,sb,that);
-                sb.deleteCharAt(sb.length()-1);
-            }
-        }
+    static class TrieNode{
+        TrieNode[] child = new TrieNode[26];
+        List<Integer> pos = new ArrayList<>();
+        int index = 0;
+        boolean isLeaf = false;
     }
-    public void match(String s,int id, Trie root){
-        boolean flag =false;
-        if(root.index!=-1 && root.index!=id){
-            if(palindrome(s,0,s.length()-1))list.add(Arrays.asList(root.index,id));
-        }
-        for(int i=s.length()-1;i>=0;i--){
-            if(root.arr[s.charAt(i)-'a']!=null){
-                if(root.arr[s.charAt(i)-'a'].index!=-1){
-                    if(palindrome(s,0,i-1) && id!=root.arr[s.charAt(i)-'a'].index)list.add(Arrays.asList(root.arr[s.charAt(i)-'a'].index,id));
+
+    static void insertWordRev(TrieNode root, String word, int index){
+
+        for (int i = word.length()-1; i >= 0; i--) {
+            char c = word.charAt(i);
+            if (root.child[c-'a'] == null){
+                TrieNode node = new TrieNode();
+
+                if(isPalindrome(word,0,i)){
+                    node.pos.add(index);
                 }
-                root=root.arr[s.charAt(i)-'a'];
+
+                root.child[c-'a'] = node;
             }
-            else{
-                flag = true;
-                break;
+
+            root = root.child[c-'a'];
+        }
+
+        root.index = index;
+        root.isLeaf = true;
+    }
+
+    static void matchWord(TrieNode root, List<List<Integer>> result, String word, int index){
+        int n = word.length();
+        for (int i = 0; i < n; i++) {
+
+            char c = word.charAt(i);
+            if (root.index > 0 && root.index != index && isPalindrome(word,i,n-1)){
+                result.add(List.of(index,root.index));
+            }
+
+            if (root.child[c-'a'] == null)
+                return;
+            root = root.child[c-'a'];
+
+        }
+
+        for(int l: root.pos){
+            if (index != l){
+                result.add(List.of(index,l));
             }
         }
-        if(!flag)dfs(root,id,new StringBuilder(),root.index);
-    }*/
+
+    }
+
+    static boolean isPalindrome(String word, int left, int right){
+        while (left < right){
+            if (word.charAt(left++) != word.charAt(right--)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * This problem uses a Trie data structure to store all words.
