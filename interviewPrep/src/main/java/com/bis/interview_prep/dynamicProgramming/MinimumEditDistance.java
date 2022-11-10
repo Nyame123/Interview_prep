@@ -12,11 +12,11 @@ package com.bis.interview_prep.dynamicProgramming;
  */
 public class MinimumEditDistance {
     public static void main(String args[]) {
-        String str1 = "azced";
-        String str2 = "abcdef";
+        String str1 = "horse";
+        String str2 = "ros";
         MinimumEditDistance editDistance = new MinimumEditDistance();
-//        int result = editDistance.dynamicEditDistance(str1.toCharArray(), str2.toCharArray());
-        int result = editDistance.recEditDistance(str1.toCharArray(), str2.toCharArray(), 0, 0);
+        int result = editDistance.dynamicEditDistance(str1.toCharArray(), str2.toCharArray());
+        //int result = editDistance.recEditDistance(str1.toCharArray(), str2.toCharArray(), 0, 0);
         System.out.print(result);
     }
 

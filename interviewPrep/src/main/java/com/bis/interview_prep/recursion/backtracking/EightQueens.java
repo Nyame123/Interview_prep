@@ -1,6 +1,7 @@
 package com.bis.interview_prep.recursion.backtracking;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class EightQueens {
 
         int n = 6;
 
-        List<Queen[]> ways = waysQueen(n);
+        List<Queen[]> ways = eightQueen(n);
         System.out.println(ways.size());
         for (int i = 0; i < ways.size(); i++) {
             for (int j = 0; j < ways.get(i).length; j++) {
@@ -24,6 +25,74 @@ public class EightQueens {
         }
 
     }
+
+
+    //Eight Queen problem
+    static List<Queen[]> eightQueen(int n){
+        List<Queen[]> ways = new LinkedList<>();
+        Queen[] column = new Queen[n];
+        placement(n,0,column,ways);
+
+        return ways;
+    }
+
+    static void placement(int n, int row,Queen[] cols, List<Queen[]> grid){
+        //base case
+        if (row == n){
+            grid.add(cols.clone());
+        }else{
+            for (int col = 0; col < n; col++) {
+                if (isVALID(cols,row,col)){
+                    cols[row] = new Queen(row,col);
+
+                    placement(n,row+1,cols,grid);
+                }
+            }
+        }
+    }
+
+    static boolean isVALID(Queen[] colums, int row, int col){
+        int newRow = row;
+        int newCol = col;
+
+        for (int i = 0; i < newRow; i++) {
+            int oldCol = colums[i].col;
+
+            if (oldCol == newCol)
+                return false;
+
+            int rowDistance = Math.abs(newRow - i);
+            int colDistance = Math.abs(newCol - oldCol);
+
+            if (rowDistance == colDistance)
+                return false;
+        }
+
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static List<Queen[]> waysQueen(int n) {
         List<Queen[]> ways = new ArrayList<>();

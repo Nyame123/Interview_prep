@@ -19,10 +19,10 @@ import java.util.LinkedList;
 public class LargestRectangleWithOnes {
     public static void main(String[] args) {
         int[][] mat = {
-                new int[]{1, 0, 0, 0},
-                new int[]{1, 0, 1, 1},
-                new int[]{1, 0, 1, 1},
-                new int[]{0, 1, 0, 0},
+                new int[]{0,1},
+                new int[]{1,0},
+                /*new int[]{1, 0, 1, 1},
+                new int[]{0, 1, 0, 0},*/
         };
 
         maxSquareSize(mat);
@@ -38,6 +38,7 @@ public class LargestRectangleWithOnes {
         for (int i = 1; i < n; i++) {
 
             for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
                 mat[i][j] += mat[i - 1][j];
             }
 
