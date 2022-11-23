@@ -9,8 +9,29 @@ public class UniquePath11 {
                 {0, 0}
         };
 
+        ways(5);
         int res = uniquePathsWithObstacles(grid);
         System.out.println(res);
+    }
+
+    static void ways(int n){
+        int[][] dp = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 1;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j <= i; j++) {
+                if(i != j){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }else{
+                    dp[i][j] = dp[i-1][j-1];
+                }
+            }
+        }
+
+        System.out.println(dp[n-1][n-1]);
     }
 
     static int uniquePathsWithObstacles(int[][] obstacleGrid) {

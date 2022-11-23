@@ -13,6 +13,7 @@ public class ValidParenthesisCreator {
     public static void main(String[] args) {
         int numOfParenthesis = 3;
         //HashSet<String> results = validParenthesis(numOfParenthesis);
+        validParenthesisCreateUsingClosureNumber(numOfParenthesis);
         List<String> results = generateValidParen(numOfParenthesis);
         System.out.println(results + "  " + results.size());
     }
@@ -55,6 +56,28 @@ public class ValidParenthesisCreator {
             stri[index] = ')';
             validParenthesis(stri,leftCount,rightCount-1,index+1,result);
         }
+    }
+
+    //Using Closure Number
+    static void validParenthesisCreateUsingClosureNumber(int n){
+        System.out.println(rec(n));
+    }
+
+    static List<String> rec(int n){
+        List<String> ans = new ArrayList<>();
+        if(n == 0){
+            ans.add("");
+        }else{
+            for (int i = 0; i < n; i++) {
+                for(String left: rec(i)){
+                    for(String right: rec(n-1-i)){
+                        ans.add('('+left+')'+right);
+                    }
+                }
+            }
+        }
+
+        return ans;
     }
 
     /**

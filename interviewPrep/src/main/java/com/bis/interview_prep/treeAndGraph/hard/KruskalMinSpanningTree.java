@@ -151,11 +151,6 @@ public class KruskalMinSpanningTree {
             subsets[i].rank = 0;
         }
 
-       /* // Create V subsets with single elements
-        for (int v = 0; v < V; ++v) {
-
-        }*/
-
         i = 0; // Index used to pick next edge
 
         // Number of edges to be taken is equal to V-1

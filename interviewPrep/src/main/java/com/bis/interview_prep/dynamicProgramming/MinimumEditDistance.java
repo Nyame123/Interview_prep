@@ -104,3 +104,72 @@ public class MinimumEditDistance {
         return Math.min(l, c);
     }
 }
+
+
+/**
+ * Deletion Distance
+ * The deletion distance of two strings is the minimum number of characters you need to delete in
+ * the two strings in order to get the same
+ * string. For instance, the deletion distance between "heat" and "hit" is 3:
+ *
+ * By deleting 'e' and 'a' in "heat", and 'i' in "hit", we get the string "ht" in both cases.
+ * We cannot get the same string from both strings by deleting 2 letters or fewer.
+ * Given the strings str1 and str2, write an efficient function deletionDistance
+ * that returns the deletion distance between them. Explain how your
+ * function works, and analyze its time and space complexities.
+ *
+ * input:  str1 = "dog", str2 = "frog"
+ * output: 3
+ *
+ * input:  str1 = "some", str2 = "some"
+ * output: 0
+ *
+ * input:  str1 = "some", str2 = "thing"
+ * output: 9
+ *
+ * input:  str1 = "", str2 = ""
+ * output: 0
+ **/
+class MinimumDeletionDistance{
+
+    public static void main(String[] args) {
+
+        String str1 = "heat";
+        String str2 = "hit";
+
+        int minDistance = deletionDistance(str1,str2);
+        System.out.println(minDistance);
+    }
+
+    static int deletionDistance(String str1, String str2) {
+        // your code goes here
+        int n = str1.length();
+        int m = str2.length();
+
+        int[][] dp = new int[n+1][m+1];
+
+        for(int i = 0; i < dp.length; i++){
+            dp[i][0] = i;
+        }
+
+        for(int i = 0; i < dp[0].length; i++){
+            dp[0][i] = i;
+        }
+
+        for(int i = 1; i < dp.length; i++){
+            for(int j = 1; j < dp[0].length; j++){
+
+                //same char at both location
+                if(str1.charAt(i-1) == str2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else{
+                    dp[i][j] = Math.min(dp[i-1][j],dp[i][j-1]) + 1;
+                }
+
+            }
+        }
+
+
+        return dp[n][m];
+    }
+}

@@ -1,7 +1,5 @@
 package com.bis.interview_prep.treeAndGraph.hard;
 
-import java.util.Arrays;
-
 /**
  * Segment Tree | Set 2 (Range Minimum Query)
  * Difficulty Level : Hard
@@ -28,10 +26,10 @@ public class MinInRangeSegmentTree {
 
         // Print minimum value in arr[qs..qe]
         System.out.println("Minimum of values in range [" + qs + ", "
-                + qe + "] is = " + minInRangeSegmentTree.findMinInRange(qs, qe,n));
+                + qe + "] is = " + minInRangeSegmentTree.findMinInRange(qs, qe, n));
     }
 
-    void buildSegmentTree(int[] arr){
+    void buildSegmentTree(int[] arr) {
         int n = arr.length;
         //know the length of memory needed for allocation
 
@@ -40,59 +38,59 @@ public class MinInRangeSegmentTree {
 
         //Arrays.fill(segArr,Integer.MAX_VALUE);
 
-       int overallMin = contructSegmentTree(arr,0,0,n-1);
-       System.out.println("Overall min = "+ overallMin);
+        int overallMin = contructSegmentTree(arr, 0, 0, n - 1);
+        System.out.println("Overall min = " + overallMin);
 
     }
 
     //Find the minimum within range
-    int findMinInRange(int l, int r, int n){
+    int findMinInRange(int l, int r, int n) {
         //edges cases testing
-        if (l < 0 || r > n-1 || l > r){
+        if (l < 0 || r > n - 1 || l > r) {
             System.out.println("Invalid range given");
             return Integer.MIN_VALUE;
         }
 
-        return findMinInRangeUtil(l,r,0,n-1,0);
+        return findMinInRangeUtil(l, r, 0, n - 1, 0);
     }
 
-    int findMinInRangeUtil(int l, int r, int s, int e,int pos){
+    int findMinInRangeUtil(int l, int r, int s, int e, int pos) {
 
         //if query within range
         if (l <= s && e <= r)
             return segArr[pos];
 
-         if (l > e || r < s)
+        if (l > e || r < s)
             return Integer.MAX_VALUE;
 
-        int mid = s + (e-s)/2;
-        int leftMin = findMinInRangeUtil(l,r,s,mid,2*pos+1);
-        int rightMin = findMinInRangeUtil(l,r,mid+1,e,2*pos+2);
-        int min = Math.min(leftMin,rightMin);
+        int mid = s + (e - s) / 2;
+        int leftMin = findMinInRangeUtil(l, r, s, mid, 2 * pos + 1);
+        int rightMin = findMinInRangeUtil(l, r, mid + 1, e, 2 * pos + 2);
+        int min = Math.min(leftMin, rightMin);
         return min;
 
     }
 
     //generate the segment Tree
-    private int contructSegmentTree(int[] arr,int pos,int l,int r) {
+    private int contructSegmentTree(int[] arr, int pos, int l, int r) {
 
-        if (l == r){
+        if (l == r) {
             segArr[pos] = arr[l];
             return arr[l];
         }
-        int mid = l + (r-l) / 2;
-        int leftMin = contructSegmentTree(arr,2*pos+1,l,mid);
-        int rightMin = contructSegmentTree(arr,2*pos+2,mid+1,r);
+        int mid = l + (r - l) / 2;
+        int leftMin = contructSegmentTree(arr, 2 * pos + 1, l, mid);
+        int rightMin = contructSegmentTree(arr, 2 * pos + 2, mid + 1, r);
 
-        int min = Math.min(leftMin,rightMin);
+        int min = Math.min(leftMin, rightMin);
         segArr[pos] = min;
 
         return min;
     }
 
     //checking for power of 2
-    boolean isPowerOf2(int n){
-        while (n%2 == 0){
+    boolean isPowerOf2(int n) {
+        while (n % 2 == 0) {
             n /= 2;
             if (n == 1)
                 return true;
@@ -102,9 +100,9 @@ public class MinInRangeSegmentTree {
     }
 
     //find next power of 2 of n
-    int nextPowerOf(int n){
+    int nextPowerOf(int n) {
         int power = 1;
-        while (power <= n){
+        while (power <= n) {
             power *= 2;
         }
 
@@ -112,18 +110,18 @@ public class MinInRangeSegmentTree {
     }
 
     //checking if n is a power of 2
-    int getSizeWithPowerOf2(int n){
-        int size = 2*n - 1;
-        if (!isPowerOf2(n)){
-            size = 2* nextPowerOf(n) - 1;
+    int getSizeWithPowerOf2(int n) {
+        int size = 2 * n - 1;
+        if (!isPowerOf2(n)) {
+            size = 2 * nextPowerOf(n) - 1;
         }
 
         return size;
     }
 
     //using the height of the tree to know memory needed
-    int getSizeWithLog(int n){
-        int x = (int) Math.ceil(Math.log((n)/Math.log(2)));
-        return (int) (2*Math.pow(2,x) - 1);
+    int getSizeWithLog(int n) {
+        int x = (int) Math.ceil(Math.log((n) / Math.log(2)));
+        return (int) (2 * Math.pow(2, x) - 1);
     }
 }
