@@ -87,9 +87,7 @@ public class UniquePathInGrid {
         for (int i = 0; i < m; i++) {
 
             for (int j = 1; j < n; j++) {
-                if (j > 0) {
-                    dp[j] = dp[j] + dp[j - 1];
-                }
+                dp[j] = dp[j] + dp[j - 1];
 
             }
         }
