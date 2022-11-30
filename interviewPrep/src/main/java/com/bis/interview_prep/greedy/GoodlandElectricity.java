@@ -26,7 +26,7 @@ import java.util.List;
 public class GoodlandElectricity {
 
     public static void main(String[] args) {
-        List<Integer> arr = Arrays.asList(0, 1, 1, 1, 1, 0);
+        List<Integer> arr = Arrays.asList(0, 1, 1, 1, 0, 1, 0);
         int k = 2;
         int res = pylonsShort(k,arr);
         System.out.println(res);
@@ -53,6 +53,11 @@ public class GoodlandElectricity {
             }
 
             sum++;
+
+            if (take + k <= i){
+                return -1;
+            }
+
             i = take + k;
 
         }
@@ -86,4 +91,5 @@ public class GoodlandElectricity {
 
         return sum;
     }
+
 }
