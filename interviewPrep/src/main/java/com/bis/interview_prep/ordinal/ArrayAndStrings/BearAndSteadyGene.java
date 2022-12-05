@@ -1,6 +1,7 @@
 package com.bis.interview_prep.ordinal.ArrayAndStrings;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A gene is represented as a string of length n (where  is divisible by 4), composed of the letters A, C, T, and G.
