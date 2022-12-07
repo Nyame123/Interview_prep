@@ -15,6 +15,7 @@ public class ElementAppearedOnce {
         System.out.println(res);
     }
 
+
     //using linear time and constant space
     static int findSingleElement(int[] arr){
         int n = arr.length;
