@@ -11,9 +11,9 @@ public class BuyAndSellIV {
 
     public static void main(String[] args) {
         int k = 2;
-        int[] array = {3, 2, 6, 5, 0, 3};
+        int[] array = {10, 22, 5, 75, 65, 80};
 
-        int profit = bestBuyNSellOptimize(array, k);
+        int profit = bestBuyNSell(array, k);
 
         System.out.println(profit);
     }
@@ -49,7 +49,7 @@ public class BuyAndSellIV {
 
                 int curSum = 0;
                 for (int m = 0; m < j; m++) {
-                    curSum = Math.max(curSum, array[j] - array[m] + profit[i - 1][j - 1]);
+                    curSum = Math.max(curSum, array[j] - array[m] + profit[i - 1][m]);
                 }
 
                 profit[i][j] = Math.max(curSum, profit[i][j - 1]);

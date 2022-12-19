@@ -120,10 +120,10 @@ public class CousinBinaryTree {
                 levelSize--;
             }
 
-            if (parA != null && parB != null && parA != parB)
-                return true;
+            if (parA != null && parB != null)
+                return parA != parB;
 
-            if ((parA == null && parB != null) || (parA != null && parB == null)) {
+            if (parA != null || parB != null) {
                 return false;
             }
         }

@@ -62,22 +62,26 @@ public class MatrixMultiplicationCost {
             return 0;
         }
 
+        if (j-i < 2){
+            return 0;
+        }
+
         if (dp[i][j] != -1) {
             return dp[i][j];
         }
 
         dp[i][j] = Integer.MAX_VALUE;
-        for (int k = i; k < j; k++) {
+        for (int k = i+1; k < j; k++) {
             dp[i][j] = Math.min(
                     dp[i][j], matrixChainMemoised(p, i, k)
-                            + matrixChainMemoised(p, k + 1, j)
-                            + p[i - 1] * p[k] * p[j]);
+                            + matrixChainMemoised(p, k, j)
+                            + p[i] * p[k] * p[j]);
         }
         return dp[i][j];
     }
 
     static int MatrixChainOrder(int[] p, int n) {
-        int i = 1, j = n - 1;
+        int i = 0, j = n - 1;
         return matrixChainMemoised(p, i, j);
     }
 

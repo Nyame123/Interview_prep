@@ -1,8 +1,5 @@
 package com.bis.interview_prep.dynamicProgramming;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
  * <p>
@@ -13,7 +10,7 @@ import java.util.Map;
 public class EncodeMessage {
 
     public static void main(String[] args) {
-        String message = "1134";
+        String message = "1114";
         int count = encodeMessageCount(message);
         System.out.println(count);
     }
@@ -36,9 +33,40 @@ public class EncodeMessage {
         if (messageChars[0] == '0') {
             return 0;
         }
-        return encodeMessageHelper(message.toCharArray(), k, memo);
+        return encodeMessageHelper(message.toCharArray(), k , 0, memo);
     }
 
+    /**
+     * Starting from the front of the string in encoding
+     **/
+    static int encodeMessageHelper(char[] message, int k, int index, int[] memo) {
+        //base case
+        if (index == k) {
+            return 1;
+        }
+
+        if (memo[index] > 0) {
+            return memo[index];
+        }
+
+        int res = 0;
+        if (message[index] != '0')
+            res = encodeMessageHelper(message, k,index+1, memo);
+
+        if (k-index > 1) {
+            int digit = Integer.parseInt(String.valueOf(message, index, 2));
+            if (digit >= 1 && digit <= 26) {
+                res += encodeMessageHelper(message, k,index + 2, memo);
+            }
+        }
+        memo[index] = res;
+
+        return res;
+    }
+
+    /**
+     * Starting from the back of the string in encoding
+     **/
     static int encodeMessageHelper(char[] message, int k, int[] memo) {
         //base case
         if (k == 0) {

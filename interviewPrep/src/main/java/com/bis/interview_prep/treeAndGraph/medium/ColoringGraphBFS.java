@@ -111,15 +111,16 @@ public class ColoringGraphBFS {
                 CNode neighbour = adjList[cur].get(i);
                 if (!visited.contains(neighbour.key)) {
                     queue.add(neighbour.key);
-                    if (neighbour.color == curNode.color) {
-                        neighbour.color = curNode.color + 1;
-                        nodeMap.get(neighbour.key).color = neighbour.color;
-                    }
+                }
 
-                    maxColor = Math.max(maxColor, neighbour.color);
-                    if (maxColor > color - 1) {
-                        return false;
-                    }
+                if (neighbour.color == curNode.color) {
+                    neighbour.color = curNode.color + 1;
+                    nodeMap.get(neighbour.key).color = neighbour.color;
+                }
+
+                maxColor = Math.max(maxColor, neighbour.color);
+                if (maxColor > color - 1) {
+                    return false;
                 }
             }
         }

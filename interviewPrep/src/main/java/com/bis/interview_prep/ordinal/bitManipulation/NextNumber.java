@@ -1,10 +1,14 @@
 package com.bis.interview_prep.ordinal.bitManipulation;
-
+/***
+ *https://www.geeksforgeeks.org/closest-next-smaller-greater-numbers-number-set-bits/
+ *
+ * https://www.geeksforgeeks.org/next-higher-number-with-same-number-of-set-bits/
+ **/
 public class NextNumber {
 
     public static void main(String[] args) {
 
-        int num = 10;
+        int num = 156;
         int nextSmallest = nextSmallerNumberArithmetic(num);
         int nextbiggest = nextBiggerNumberArithmetic(num);
         System.out.println("Smallest = "+nextSmallest);
