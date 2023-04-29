@@ -49,7 +49,7 @@ public class CombinationalSumToTarget {
 
     /**
      * This tries all possible combinations
-     *
+     * <p>
      * Time Complexity = O(2^N)
      **/
     private static void findAllUniqueCombination(List<Integer> nums, int target, List<List<Integer>> ans,
@@ -77,88 +77,104 @@ public class CombinationalSumToTarget {
 
 class GFG {
 
-    static ArrayList<ArrayList<Integer>>
-    combinationSum(ArrayList<Integer> arr, int sum) {
-        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    public static void main(String[] args) {
+        List<Integer> nums = Arrays.asList(8, 2, 2, 4, 5, 6, 3);
+        int target = 9;
+
+        List<List<Integer>> res = combinationSum(nums, target);
+        System.out.println(res);
+    }
+
+    static List<List<Integer>> combinationSum(List<Integer> arr, int sum) {
+        List<List<Integer>> ans = new ArrayList<>();
         ArrayList<Integer> temp = new ArrayList<>();
 
-        // first do hashing since hashset does not always
-        // sort
-        //  removing the duplicates using HashSet and
-        // Sorting the arrayList
-
-        Set<Integer> set = new HashSet<>(arr);
-        arr.clear();
-        arr.addAll(set);
         Collections.sort(arr);
 
         findNumbers(ans, arr, sum, 0, temp);
         return ans;
     }
 
-    static void
-    findNumbers(ArrayList<ArrayList<Integer>> ans,
-                ArrayList<Integer> arr, int sum, int index,
-                ArrayList<Integer> temp) {
+    static void findNumbers(List<List<Integer>> ans, List<Integer> arr, int sum, int index, List<Integer> temp) {
+
+        //base case
+        if (index >= arr.size())
+            return;
 
         if (sum == 0) {
-
             // Adding deep copy of list to ans
-
             ans.add(new ArrayList<>(temp));
             return;
         }
 
-        for (int i = index; i < arr.size(); i++) {
+        if (sum < 0)
+            return;
 
-            // checking that sum does not become negative
-
-            if ((sum - arr.get(i)) >= 0) {
-
-                // adding element which can contribute to
-                // sum
-
-                temp.add(arr.get(i));
-
-                findNumbers(ans, arr, sum - arr.get(i), i,
-                        temp);
-
-                // removing element from list (backtracking)
-                temp.remove(arr.get(i));
-            }
-        }
+        //take index
+        temp.add(arr.get(index));
+        findNumbers(ans, arr, sum - arr.get(index), index, temp);
+        //do not take index
+        temp.remove(arr.get(index));
+        findNumbers(ans, arr, sum, index + 1, temp);
     }
+}
 
-    // Driver Code
+class CombinationSumUsingDP {
 
     public static void main(String[] args) {
-        ArrayList<Integer> arr = new ArrayList<>();
+        int target = 9;
+        int[] coins = {8, 2, 2, 4, 5, 6, 3};
 
-        arr.add(2);
-        arr.add(4);
-        arr.add(6);
-        arr.add(8);
+        List<List<Integer>> result = combinationSum(coins, target);
+        System.out.println(result);
+    }
 
-        int sum = 8;
+    static List<List<Integer>> combinationSum(int[] coins, int target) {
+        int n = coins.length;
+        int[][] dp = new int[n + 1][target + 1];
 
-        ArrayList<ArrayList<Integer>> ans
-                = combinationSum(arr, sum);
-
-        // If result is empty, then
-        if (ans.size() == 0) {
-            System.out.println("Empty");
-            return;
+        for (int i = 0; i < dp.length; i++) {
+            dp[i][0] = 1;
         }
 
-        // print all combinations stored in ans
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                if (coins[i - 1] <= j) {
+                    dp[i][j] = dp[i][j - coins[i - 1]];
+                }
 
-        for (int i = 0; i < ans.size(); i++) {
-
-            System.out.print("(");
-            for (int j = 0; j < ans.get(i).size(); j++) {
-                System.out.print(ans.get(i).get(j) + " ");
+                dp[i][j] += dp[i - 1][j];
             }
-            System.out.print(") ");
         }
+
+        System.out.println(dp[n][target]);
+        return printCombination(coins, dp);
+    }
+
+    static List<List<Integer>> printCombination(int[] coins, int[][] dp) {
+        int i = dp.length - 1;
+        int j = dp[0].length - 1;
+
+        List<List<Integer>> results = new ArrayList<>();
+
+        while (dp[i][j] != 0) {
+            List<Integer> ans = new ArrayList<>();
+            while (j > 0) {
+                if (i == 1 || dp[i][j] != dp[i - 1][j]) {
+                    ans.add(coins[i - 1]);
+                    dp[i][j]--;
+                    j -= coins[i - 1];
+                } else {
+                    while (i != 1 && dp[i][j] == dp[i - 1][j]) {
+                        dp[i][j]--;
+                        i--;
+                    }
+                }
+            }
+            results.add(ans);
+            i = dp.length - 1;
+            j = dp[0].length - 1;
+        }
+        return results;
     }
 }

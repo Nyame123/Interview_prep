@@ -2,6 +2,7 @@ package com.bis.interview_prep.dynamicProgramming;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -144,7 +145,7 @@ public class DivisibleByKDp {
     }
 
     static int maxSumDivisbleRec(int index, int[] nums, int k, int rem, Map<String, Integer> map) {
-        String key = String.format("%d,%d", rem, index);
+        String key = String.format(Locale.getDefault(),"%d,%d", rem, index);
         if (index >= nums.length) {
             return 0;
         }
