@@ -125,13 +125,16 @@ public class RotateString {
      * is the largest possible prefix of B ending before B[i].
      *
      * To build the shift table, we use a dynamic programming approach, where all previously calculated values of shifts are correct.
-     * Then, left will be the end of the candidate prefix of B, and right will be the end of the candidate section that should match the prefix B[0], B[1], ..., B[left]. Call positions (left, right) "matching" if the prefix ending at B[left] matches the same length string ending at B[right]. The invariant in our loop will be that (left - 1, right - 1) is matching by the end of each for-block.
+     * Then, left will be the end of the candidate prefix of B, and right will be the end of the candidate section that should match
+     * the prefix B[0], B[1], ..., B[left]. Call positions (left, right) "matching" if the prefix ending at B[left] matches
+     * the same length string ending at B[right]. The invariant in our loop will be that (left - 1, right - 1) is matching by the end of each for-block.
      *
      * In a new for-block, if (left, right) is matching (ie. (left - 1, right - 1) is matching from before, plus B[left] == B[right]),
      * then we know the shift (right - left) is the same number as before. Otherwise, when (left, right) is not matching, we need to find a shorter prefix.
      *
      * Our strategy is to find a matching of (left2, right) where left2 < left, by finding matchings (left2 - 1, right - 1) plus checking
-     * B[left2] == B[right]. Since (left - 1, right - 1) is a matching, by transitivity we want to find matchings (left2 - 1, left - 1). The largest such left2 is left2 = left - shifts[left]. We repeatedly check these left2's in greedy order from largest to smallest.
+     * B[left2] == B[right]. Since (left - 1, right - 1) is a matching, by transitivity we want to find
+     * matchings (left2 - 1, left - 1). The largest such left2 is left2 = left - shifts[left]. We repeatedly check these left2's in greedy order from largest to smallest.
      *
      * To find a match of B in A+A with such a shift table ready, we employ a similar strategy. We maintain a matching
      * (match_len - 1, i - 1), where these positions correspond to strings of length match_len that end at B[match_len - 1]
