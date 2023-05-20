@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class RotateString {
 
     public static void main(String[] args) {
-        String s = "bbbacddceeb";
-        String pat = "ceebbbbacdd";
+        String s = "kofi is going to school";
+        String pat = "kofi";
         System.out.println(rotateString1(s, pat));
     }
 

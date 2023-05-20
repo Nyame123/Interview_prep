@@ -20,7 +20,7 @@ import java.util.Map;
 public class EggDropDp {
 
     public static void main(String[] args) {
-        int floors = 6, eggs = 3;
+        int floors = 3, eggs = 2;
         int minDrop = minimumEggDropRecursive(floors, eggs);
         System.out.println(minDrop);
     }

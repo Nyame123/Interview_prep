@@ -23,7 +23,7 @@ import java.util.ArrayDeque;
 public class ExpressionEvaluator {
 
     public static void main(String[] args) {
-        String s = "(1+(4+5+2)-3)+(6+8)";
+        String s = "(43455 + 678 + (7 * 8 + 1) / (56 + 9 - 9))";
         int result = calculate(s);
         System.out.println(result);
     }
