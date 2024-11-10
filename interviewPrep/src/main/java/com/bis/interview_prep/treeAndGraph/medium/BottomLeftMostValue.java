@@ -2,8 +2,6 @@ package com.bis.interview_prep.treeAndGraph.medium;
 
 import com.bis.interview_prep.treeAndGraph.prep.TreeNode;
 
-import sun.reflect.generics.tree.Tree;
-
 public class BottomLeftMostValue {
 
     static int min = 0;

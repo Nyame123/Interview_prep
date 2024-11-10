@@ -3,7 +3,7 @@ package com.bis.interview_prep.dynamicProgramming;
 public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
-        String s = "cbbd";
+        String s = "abaaba";
         System.out.println(longestPalindromeExpandAroundCenter(s));
     }
 

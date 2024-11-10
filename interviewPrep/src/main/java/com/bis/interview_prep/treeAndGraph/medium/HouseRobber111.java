@@ -2,9 +2,6 @@ package com.bis.interview_prep.treeAndGraph.medium;
 
 import com.bis.interview_prep.treeAndGraph.prep.TreeNode;
 
-import javax.swing.JRootPane;
-
-import sun.reflect.generics.tree.Tree;
 
 /**
  * You’re a thief trying to rob a binary tree. As a thief, you are trying to steal as much money as possible.
